@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asomi Enterprise | Premium Printing Services in Guwahati</title>
+
+<meta name="description" content="Asomi Enterprise offers premium digital printing, flex printing, book printing, visiting cards, brochures, certificates, photo printing and custom printing services in Guwahati, Assam.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Poppins',sans-serif;
+background:#0b1120;
+color:#fff;
+overflow-x:hidden;
+}
+
+body::before{
+content:"";
+position:fixed;
+width:700px;
+height:700px;
+background:#0066ff55;
+filter:blur(180px);
+top:-250px;
+left:-250px;
+z-index:-1;
+}
+
+body::after{
+content:"";
+position:fixed;
+width:600px;
+height:600px;
+background:#ff660033;
+filter:blur(180px);
+bottom:-200px;
+right:-200px;
+z-index:-1;
+}
+
+.container{
+width:90%;
+max-width:1250px;
+margin:auto;
+}
+
+header{
+position:fixed;
+width:100%;
+top:0;
+left:0;
+backdrop-filter:blur(15px);
+background:rgba(10,15,30,.75);
+border-bottom:1px solid rgba(255,255,255,.08);
+z-index:999;
+}
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 0;
+}
+
+.logo{
+font-size:30px;
+font-weight:800;
+color:#00d4ff;
+}
+
+.logo span{
+color:#fff;
+}
+
+nav ul{
+display:flex;
+list-style:none;
+gap:30px;
+}
+
+nav ul li a{
+text-decoration:none;
+color:white;
+font-weight:500;
+transition:.3s;
+}
+
+nav ul li a:hover{
+color:#00d4ff;
+}
+
+.btn{
+padding:13px 28px;
+background:linear-gradient(135deg,#00c6ff,#0072ff);
+border-radius:50px;
+text-decoration:none;
+color:white;
+font-weight:600;
+display:inline-block;
+transition:.4s;
+}
+
+.btn:hover{
+transform:translateY(-5px);
+box-shadow:0 15px 35px rgba(0,114,255,.4);
+}
+
+.hero{
+padding-top:170px;
+padding-bottom:100px;
+}
+
+.hero-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
+align-items:center;
+gap:60px;
+}
+
+.hero h4{
+color:#00d4ff;
+font-size:22px;
+margin-bottom:15px;
+}
+
+.hero h1{
+font-size:58px;
+font-weight:800;
+line-height:1.1;
+margin-bottom:25px;
+}
+
+.hero p{
+font-size:18px;
+line-height:1.9;
+color:#ddd;
+margin-bottom:35px;
+}
+
+.hero-image{
+display:flex;
+justify-content:center;
+}
+
+.hero-card{
+width:420px;
+height:420px;
+border-radius:30px;
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(25px);
+display:flex;
+justify-content:center;
+align-items:center;
+border:1px solid rgba(255,255,255,.15);
+box-shadow:0 20px 50px rgba(0,0,0,.4);
+animation:float 5s ease-in-out infinite;
+}
+
+.hero-card i{
+font-size:180px;
+color:#00d4ff;
+}
+
+@keyframes float{
+50%{transform:translateY(-20px);}
+}
+
+section{
+padding:90px 0;
+}
+
+.title{
+text-align:center;
+margin-bottom:60px;
+}
+
+.title h2{
+font-size:42px;
+margin-bottom:15px;
+}
+
+.title p{
+color:#bbb;
+}
+
+.services{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+}
+
+.card{
+background:rgba(255,255,255,.06);
+backdrop-filter:blur(20px);
+border-radius:20px;
+padding:35px;
+transition:.4s;
+border:1px solid rgba(255,255,255,.08);
+}
+
+.card:hover{
+transform:translateY(-12px);
+background:rgba(255,255,255,.09);
+}
+
+.card i{
+font-size:45px;
+margin-bottom:20px;
+color:#00d4ff;
+}
+
+.card h3{
+margin-bottom:15px;
+}
+
+.card p{
+color:#ccc;
+line-height:1.8;
+}
+
+.features{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
+gap:50px;
+align-items:center;
+}
+
+.feature-box{
+background:rgba(255,255,255,.06);
+padding:40px;
+border-radius:25px;
+}
+
+.feature-box h3{
+margin-bottom:25px;
+font-size:30px;
+}
+
+.feature-box ul{
+list-style:none;
+}
+
+.feature-box li{
+padding:15px 0;
+font-size:18px;
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.feature-box li i{
+color:#00d4ff;
+margin-right:15px;
+}
+
+.contact{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
+gap:50px;
+}
+
+.contact-box{
+background:rgba(255,255,255,.07);
+padding:45px;
+border-radius:25px;
+}
+
+.contact-box h3{
+font-size:32px;
+margin-bottom:20px;
+}
+
+.contact-box p{
+margin:18px 0;
+font-size:18px;
+color:#ddd;
+line-height:1.8;
+}
+
+.contact-box i{
+color:#00d4ff;
+margin-right:12px;
+}
+
+.map{
+overflow:hidden;
+border-radius:20px;
+height:400px;
+}
+
+iframe{
+width:100%;
+height:100%;
+border:none;
+}
+
+footer{
+padding:40px 0;
+text-align:center;
+background:#050b16;
+border-top:1px solid rgba(255,255,255,.08);
+}
+
+footer p{
+color:#aaa;
+}
+
+@media(max-width:900px){
+
+.hero h1{
+font-size:42px;
+}
+
+nav ul{
+display:none;
+}
+
+.hero-card{
+width:320px;
+height:320px;
+}
+
+.hero-card i{
+font-size:120px;
+}
+
+}
+
+</style>
+
+</head>
+<body>
+
+<header>
+
+<div class="container">
+
+<nav>
+
+<div class="logo">
+Asomi <span>Enterprise</span>
+</div>
+
+<ul>
+
+<li><a href="#">Home</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#why">Why Us</a></li>
+<li><a href="#contact">Contact</a></li>
+
+</ul>
+
+<a href="tel:+919954413145" class="btn">
+Call Now
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+<section class="hero">
+
+<div class="container">
+
+<div class="hero-grid">
+
+<div>
+
+<h4>Your Trusted Printing Partner in Guwahati</h4>
+
+<h1>
+Premium Printing Services For Every Business
+</h1>
+
+<p>
+
+Welcome to <strong>Asomi Enterprise</strong>, your one-stop destination for all kinds of printing services. We provide premium quality printing solutions for businesses, students, organizations and individuals with affordable pricing, fast delivery and professional service.
+
+</p>
+
+<a href="#services" class="btn">
+Explore Services
+</a>
+
+</div>
+
+<div class="hero-image">
+
+<div class="hero-card">
+
+<i class="fa-solid fa-print"></i>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="services">
+
+<div class="container">
+
+<div class="title">
+
+<h2>Our Printing Services</h2>
+
+<p>Complete Printing Solutions Under One Roof</p>
+
+</div>
+
+<div class="services">
+
+<div class="card">
+<i class="fa-solid fa-print"></i>
+<h3>Digital Printing</h3>
+<p>Premium digital printing with vibrant colors and excellent finishing.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-image"></i>
+<h3>Flex & Banner Printing</h3>
+<p>Indoor & outdoor banners with weather-resistant premium quality.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-address-card"></i>
+<h3>Visiting Cards</h3>
+<p>Luxury business cards with modern finishing options.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-file-lines"></i>
+<h3>Pamphlets & Flyers</h3>
+<p>Eye-catching promotional materials for marketing campaigns.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-book-open"></i>
+<h3>Brochures</h3>
+<p>Professional brochures with premium printing quality.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-file-signature"></i>
+<h3>Letterheads</h3>
+<p>Corporate stationery designed for businesses.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-receipt"></i>
+<h3>Bill Books</h3>
+<p>GST and customized bill books with numbering.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-id-card"></i>
+<h3>ID Cards</h3>
+<p>School, office and event identity cards.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-award"></i>
+<h3>Certificates</h3>
+<p>Elegant certificate printing with premium paper quality.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-tags"></i>
+<h3>Stickers & Labels</h3>
+<p>Custom waterproof stickers and branding labels.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-camera"></i>
+<h3>Photo Printing</h3>
+<p>Crystal clear HD photo printing in multiple sizes.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-layer-group"></i>
+<h3>Book & Register Printing</h3>
+<p>Books, notebooks, registers and customized printing solutions.</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="why">
+
+<div class="container">
+
+<div class="features">
+
+<div class="feature-box">
+
+<h3>Why Choose Asomi Enterprise?</h3>
+
+<ul>
+
+<li><i class="fa-solid fa-circle-check"></i>High Quality Printing</li>
+
+<li><i class="fa-solid fa-circle-check"></i>Affordable Pricing</li>
+
+<li><i class="fa-solid fa-circle-check"></i>Fast Turnaround Time</li>
+
+<li><i class="fa-solid fa-circle-check"></i>Professional Customer Support</li>
+
+<li><i class="fa-solid fa-circle-check"></i>Customized Printing Solutions</li>
+
+<li><i class="fa-solid fa-circle-check"></i>Latest Printing Technology</li>
+
+<li><i class="fa-solid fa-circle-check"></i>Trusted by Local Businesses</li>
+
+</ul>
+
+</div>
+
+<div class="feature-box">
+
+<h3>Our Commitment</h3>
+
+<p style="line-height:2;color:#ddd;">
+
+At <strong>Asomi Enterprise</strong>, we believe every print represents your brand. Our experienced team ensures vibrant colors, sharp quality, timely delivery and customer satisfaction for every project.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="contact">
+
+<div class="container">
+
+<div class="title">
+
+<h2>Contact Us</h2>
+
+<p>Let's Print Your Ideas Beautifully</p>
+
+</div>
+
+<div class="contact">
+
+<div class="contact-box">
+
+<h3>Asomi Enterprise</h3>
+
+<p>
+<i class="fa-solid fa-location-dot"></i>
+Chandmari, GMC Market,<br>
+Guwahati, Assam – 781003
+</p>
+
+<p>
+
+<i class="fa-solid fa-phone"></i>
+
++91 99544 13145
+
+</p>
+
+<p>
+
+<i class="fa-solid fa-phone"></i>
+
++91 98643 13145
+
+</p>
+
+<p>
+
+<i class="fa-solid fa-envelope"></i>
+
+Professional Printing Services
+
+</p>
+
+<a href="tel:+919954413145" class="btn">
+Call Now
+</a>
+
+</div>
+
+<div class="map">
+
+<iframe src="https://maps.google.com/maps?q=Chandmari%20GMC%20Market%20Guwahati&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+<div class="container">
+
+<p>
+
+© 2026 Asomi Enterprise | Premium Printing Services in Guwahati | All Rights Reserved.
+
+</p>
+
+</div>
+
+</footer>
+
+</body>
+</html>
