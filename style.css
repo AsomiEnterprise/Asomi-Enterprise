@@ -403,4 +403,7 @@ nav ul{
     height:280px;
 }
 
+}/* Clickable Service Cards */
+.card {
+    cursor: pointer;
 }
