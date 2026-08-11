@@ -1,46 +1,53 @@
-/* ==========================================
+/* =====================================================
    ASOMI ENTERPRISE
-   INTERACTIVE JAVASCRIPT
-========================================== */
+   PREMIUM INTERACTIONS
+===================================================== */
 
 
-/* ==========================================
-   MOBILE NAVIGATION
-========================================== */
+/* =====================================================
+   MOBILE MENU
+===================================================== */
 
-const navbar = document.querySelector(".navbar");
-const menuToggle = document.querySelector(".menu-toggle");
+const menuButton =
+    document.querySelector(".menu-button");
 
-if (menuToggle) {
+const mobileMenu =
+    document.querySelector(".mobile-menu");
 
-    menuToggle.addEventListener("click", () => {
 
-        navbar.classList.toggle("menu-open");
+if (menuButton) {
+
+    menuButton.addEventListener("click", () => {
+
+        mobileMenu.classList.toggle("active");
 
     });
 
 }
 
 
-/* Close mobile menu after clicking a link */
+/* Close mobile menu */
 
-document.querySelectorAll("nav a").forEach(link => {
+document
+    .querySelectorAll(".mobile-menu a")
+    .forEach(link => {
 
-    link.addEventListener("click", () => {
+        link.addEventListener("click", () => {
 
-        navbar.classList.remove("menu-open");
+            mobileMenu.classList.remove("active");
+
+        });
 
     });
 
-});
 
-
-/* ==========================================
-   SCROLL REVEAL ANIMATION
-========================================== */
+/* =====================================================
+   SCROLL REVEAL
+===================================================== */
 
 const revealElements =
     document.querySelectorAll(".reveal");
+
 
 const revealObserver =
     new IntersectionObserver(
@@ -77,14 +84,15 @@ revealElements.forEach(element => {
 });
 
 
-/* ==========================================
-   STAGGER SERVICE CARDS
-========================================== */
+/* =====================================================
+   SERVICE CARD STAGGER
+===================================================== */
 
-const serviceCards =
+const cards =
     document.querySelectorAll(".service-card");
 
-serviceCards.forEach((card, index) => {
+
+cards.forEach((card, index) => {
 
     card.style.transitionDelay =
         `${(index % 4) * 70}ms`;
@@ -92,53 +100,117 @@ serviceCards.forEach((card, index) => {
 });
 
 
-/* ==========================================
-   MOUSE PARALLAX
-========================================== */
+/* =====================================================
+   3D SERVICE CARD EFFECT
+===================================================== */
+
+cards.forEach(card => {
+
+    card.addEventListener("mousemove", event => {
+
+        if (window.innerWidth < 900) return;
+
+
+        const rect =
+            card.getBoundingClientRect();
+
+
+        const mouseX =
+            event.clientX - rect.left;
+
+
+        const mouseY =
+            event.clientY - rect.top;
+
+
+        const centerX =
+            rect.width / 2;
+
+
+        const centerY =
+            rect.height / 2;
+
+
+        const rotateX =
+            (mouseY - centerY) / 25;
+
+
+        const rotateY =
+            (centerX - mouseX) / 25;
+
+
+        card.style.transform =
+
+            `perspective(900px)
+             translateY(-16px)
+             scale(1.025)
+             rotateX(${rotateX}deg)
+             rotateY(${rotateY}deg)`;
+
+    });
+
+
+    card.addEventListener("mouseleave", () => {
+
+        card.style.transform = "";
+
+    });
+
+});
+
+
+/* =====================================================
+   HERO AE PARALLAX
+===================================================== */
 
 const heroVisual =
-    document.querySelector(".hero-visual");
+    document.querySelector(".hero-brand-visual");
 
-const printCard =
-    document.querySelector(".main-print-card");
+const giantAE =
+    document.querySelector(".giant-ae");
 
 
-if (
-    heroVisual &&
-    printCard &&
-    window.innerWidth > 900
-) {
+if (heroVisual && giantAE) {
 
     heroVisual.addEventListener(
         "mousemove",
         event => {
 
+            if (window.innerWidth < 900) return;
+
+
             const rect =
                 heroVisual.getBoundingClientRect();
+
 
             const x =
                 event.clientX - rect.left;
 
+
             const y =
                 event.clientY - rect.top;
+
 
             const centerX =
                 rect.width / 2;
 
+
             const centerY =
                 rect.height / 2;
 
-            const rotateY =
+
+            const moveX =
                 (x - centerX) / 35;
 
-            const rotateX =
-                (centerY - y) / 35;
 
-            printCard.style.transform =
-                `perspective(1000px)
-                 rotateY(${rotateY}deg)
-                 rotateX(${rotateX}deg)
-                 translateY(-5px)`;
+            const moveY =
+                (y - centerY) / 35;
+
+
+            giantAE.style.transform =
+
+                `translate(${moveX}px,${moveY}px)
+                 rotate(-5deg)`;
 
         }
     );
@@ -148,8 +220,7 @@ if (
         "mouseleave",
         () => {
 
-            printCard.style.transform =
-                "";
+            giantAE.style.transform = "";
 
         }
     );
@@ -157,24 +228,28 @@ if (
 }
 
 
-/* ==========================================
-   NAVBAR SCROLL EFFECT
-========================================== */
+/* =====================================================
+   NAVBAR SCROLL
+===================================================== */
+
+const navbar =
+    document.querySelector(".navbar");
+
 
 window.addEventListener(
     "scroll",
     () => {
 
-        if (window.scrollY > 40) {
+        if (window.scrollY > 50) {
 
             navbar.style.background =
-                "rgba(7,9,13,.72)";
+                "rgba(5,6,9,.75)";
 
             navbar.style.backdropFilter =
-                "blur(18px)";
+                "blur(20px)";
 
             navbar.style.borderBottom =
-                "1px solid rgba(255,255,255,.06)";
+                "1px solid rgba(255,255,255,.05)";
 
         } else {
 
@@ -193,57 +268,69 @@ window.addEventListener(
 );
 
 
-/* ==========================================
-   SERVICE CARD MAGNETIC EFFECT
-========================================== */
+/* =====================================================
+   ACTIVE NAVIGATION
+===================================================== */
 
-serviceCards.forEach(card => {
+const sections =
+    document.querySelectorAll("section[id]");
 
-    card.addEventListener(
-        "mousemove",
-        event => {
-
-            const rect =
-                card.getBoundingClientRect();
-
-            const x =
-                event.clientX - rect.left;
-
-            const y =
-                event.clientY - rect.top;
-
-            const rotateX =
-                (y - rect.height / 2) / 22;
-
-            const rotateY =
-                (rect.width / 2 - x) / 22;
-
-            card.style.transform =
-                `perspective(800px)
-                 translateY(-15px)
-                 scale(1.025)
-                 rotateX(${rotateX}deg)
-                 rotateY(${rotateY}deg)`;
-
-        }
+const navLinks =
+    document.querySelectorAll(
+        ".desktop-nav a"
     );
 
 
-    card.addEventListener(
-        "mouseleave",
-        () => {
+window.addEventListener(
+    "scroll",
+    () => {
 
-            card.style.transform = "";
+        let current = "";
 
-        }
-    );
+        sections.forEach(section => {
 
-});
+            const sectionTop =
+                section.offsetTop - 180;
 
 
-/* ==========================================
-   SMOOTH ANCHOR SCROLL
-========================================== */
+            if (
+                window.scrollY >=
+                sectionTop
+            ) {
+
+                current =
+                    section.getAttribute("id");
+
+            }
+
+        });
+
+
+        navLinks.forEach(link => {
+
+            link.style.color =
+                "#9da2ac";
+
+
+            if (
+                link.getAttribute("href") ===
+                `#${current}`
+            ) {
+
+                link.style.color =
+                    "#f1d89d";
+
+            }
+
+        });
+
+    }
+);
+
+
+/* =====================================================
+   SMOOTH SCROLL
+===================================================== */
 
 document
     .querySelectorAll('a[href^="#"]')
@@ -258,13 +345,19 @@ document
                         this.getAttribute("href")
                     );
 
+
                 if (!target) return;
+
 
                 event.preventDefault();
 
+
                 target.scrollIntoView({
+
                     behavior: "smooth",
+
                     block: "start"
+
                 });
 
             }
@@ -273,66 +366,146 @@ document
     });
 
 
-/* ==========================================
-   CURRENT YEAR
-========================================== */
+/* =====================================================
+   MOUSE GOLD GLOW
+===================================================== */
 
-const footerYear =
-    document.querySelector(".footer-bottom span");
-
-if (footerYear) {
-
-    footerYear.textContent =
-        `© ${new Date().getFullYear()} Asomi Enterprise. All Rights Reserved.`;
-
-}
-
-
-/* ==========================================
-   GOLD CURSOR GLOW
-========================================== */
-
-const cursorGlow =
+const mouseGlow =
     document.createElement("div");
 
-cursorGlow.style.position = "fixed";
-cursorGlow.style.width = "220px";
-cursorGlow.style.height = "220px";
-cursorGlow.style.borderRadius = "50%";
-cursorGlow.style.pointerEvents = "none";
-cursorGlow.style.zIndex = "0";
-cursorGlow.style.background =
-    "radial-gradient(circle, rgba(217,181,109,.045), transparent 70%)";
-cursorGlow.style.transform =
-    "translate(-50%, -50%)";
-cursorGlow.style.transition =
+
+mouseGlow.style.position =
+    "fixed";
+
+mouseGlow.style.width =
+    "250px";
+
+mouseGlow.style.height =
+    "250px";
+
+mouseGlow.style.borderRadius =
+    "50%";
+
+mouseGlow.style.pointerEvents =
+    "none";
+
+mouseGlow.style.zIndex =
+    "-1";
+
+mouseGlow.style.background =
+    "radial-gradient(circle, rgba(201,164,93,.055), transparent 70%)";
+
+mouseGlow.style.transform =
+    "translate(-50%,-50%)";
+
+mouseGlow.style.transition =
     "left .15s ease-out, top .15s ease-out";
 
-document.body.appendChild(cursorGlow);
+
+document.body.appendChild(
+    mouseGlow
+);
+
 
 window.addEventListener(
     "mousemove",
     event => {
 
-        cursorGlow.style.left =
+        mouseGlow.style.left =
             `${event.clientX}px`;
 
-        cursorGlow.style.top =
+        mouseGlow.style.top =
             `${event.clientY}px`;
 
     }
 );
 
 
-/* ==========================================
+/* =====================================================
+   BUTTON MAGNETIC EFFECT
+===================================================== */
+
+const buttons =
+    document.querySelectorAll(
+        ".primary-button, .secondary-button"
+    );
+
+
+buttons.forEach(button => {
+
+    button.addEventListener(
+        "mousemove",
+        event => {
+
+            if (window.innerWidth < 900) return;
+
+
+            const rect =
+                button.getBoundingClientRect();
+
+
+            const x =
+                event.clientX - rect.left;
+
+
+            const y =
+                event.clientY - rect.top;
+
+
+            const moveX =
+                (x - rect.width / 2) / 7;
+
+
+            const moveY =
+                (y - rect.height / 2) / 7;
+
+
+            button.style.transform =
+                `translate(${moveX}px,${moveY}px)`;
+
+        }
+    );
+
+
+    button.addEventListener(
+        "mouseleave",
+        () => {
+
+            button.style.transform = "";
+
+        }
+    );
+
+});
+
+
+/* =====================================================
+   FOOTER YEAR
+===================================================== */
+
+const year =
+    document.getElementById("year");
+
+
+if (year) {
+
+    year.textContent =
+        new Date().getFullYear();
+
+}
+
+
+/* =====================================================
    PAGE LOADED
-========================================== */
+===================================================== */
 
 window.addEventListener(
     "load",
     () => {
 
-        document.body.classList.add("loaded");
+        document.body.classList.add(
+            "page-loaded"
+        );
 
     }
 );
