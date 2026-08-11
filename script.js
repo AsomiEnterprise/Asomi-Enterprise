@@ -90,3 +90,31 @@ document.querySelectorAll("[data-close-gallery]").forEach(el => {
 document.addEventListener("keydown", e => {
   if(e.key === "Escape") closeGallery();
 });
+/* =========================================
+   SERVICE CARDS 1–14
+   CLICK TO LIGHT
+   ========================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const serviceCards = document.querySelectorAll(
+        ".services-grid .service-card"
+    );
+
+    serviceCards.forEach(function (card) {
+
+        card.addEventListener("click", function () {
+
+            // Remove light effect from every card
+            serviceCards.forEach(function (item) {
+                item.classList.remove("active");
+            });
+
+            // Add light effect to clicked card
+            card.classList.add("active");
+
+        });
+
+    });
+
+});
