@@ -89,3 +89,225 @@ body.gallery-open{overflow:hidden}
   .gallery-modal{padding:12px}.gallery-window{padding:24px 15px;max-height:94vh}.gallery-heading h2{font-size:40px}.gallery-grid{grid-template-columns:1fr}.gallery-item img{height:250px}
   .service-visual{height:300px}.visual-title h3{font-size:32px}
 }
+/* =========================================
+   ALL 14 SERVICE CARDS
+   FLOATING + HOVER + CLICK LIGHT EFFECT
+   ========================================= */
+
+/* Both large cards + mini cards */
+.service-card,
+.mini-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+
+    transition:
+        transform 0.45s ease,
+        background 0.45s ease,
+        color 0.45s ease,
+        border-color 0.45s ease,
+        box-shadow 0.45s ease;
+
+    animation: serviceCardFloat 4s ease-in-out infinite;
+}
+
+
+/* =========================================
+   FLOATING ANIMATION
+   ========================================= */
+
+@keyframes serviceCardFloat {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+/* Different timing for each card */
+
+.service-card:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.service-card:nth-child(2) {
+    animation-delay: .5s;
+}
+
+
+/* Mini cards 3–14 */
+
+.mini-card:nth-child(1) {
+    animation-delay: .2s;
+}
+
+.mini-card:nth-child(2) {
+    animation-delay: .4s;
+}
+
+.mini-card:nth-child(3) {
+    animation-delay: .6s;
+}
+
+.mini-card:nth-child(4) {
+    animation-delay: .8s;
+}
+
+.mini-card:nth-child(5) {
+    animation-delay: 1s;
+}
+
+.mini-card:nth-child(6) {
+    animation-delay: 1.2s;
+}
+
+.mini-card:nth-child(7) {
+    animation-delay: 1.4s;
+}
+
+.mini-card:nth-child(8) {
+    animation-delay: 1.6s;
+}
+
+.mini-card:nth-child(9) {
+    animation-delay: 1.8s;
+}
+
+.mini-card:nth-child(10) {
+    animation-delay: 2s;
+}
+
+.mini-card:nth-child(11) {
+    animation-delay: 2.2s;
+}
+
+.mini-card:nth-child(12) {
+    animation-delay: 2.4s;
+}
+
+
+/* =========================================
+   HOVER EFFECT
+   ========================================= */
+
+.service-card:hover,
+.mini-card:hover {
+    transform: translateY(-12px) scale(1.025);
+    z-index: 10;
+}
+
+
+/* =========================================
+   CLICK → LIGHT COLOUR
+   ========================================= */
+
+.service-card.active,
+.mini-card.active {
+    background: linear-gradient(
+        135deg,
+        #fffdf5,
+        #f6efd9
+    ) !important;
+
+    color: #17130a !important;
+
+    border-color: #d8b45a !important;
+
+    box-shadow:
+        0 20px 55px rgba(216, 180, 90, 0.28),
+        0 0 30px rgba(216, 180, 90, 0.18);
+
+    transform: translateY(-10px) scale(1.02);
+
+    animation-play-state: paused;
+}
+
+
+/* Text becomes dark when clicked */
+
+.service-card.active h3,
+.service-card.active h4,
+.service-card.active p,
+.service-card.active span,
+.service-card.active b,
+
+.mini-card.active h3,
+.mini-card.active h4,
+.mini-card.active p,
+.mini-card.active span,
+.mini-card.active b {
+    color: #17130a !important;
+}
+
+
+/* Icons */
+
+.service-card.active .service-icon,
+.mini-card.active .service-icon {
+    color: #a77b20 !important;
+}
+
+
+/* =========================================
+   GOLD SHINE
+   ========================================= */
+
+.service-card::after,
+.mini-card::after {
+    content: "";
+
+    position: absolute;
+
+    top: -120%;
+    left: -160%;
+
+    width: 55%;
+    height: 350%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.35),
+        transparent
+    );
+
+    transform: rotate(25deg);
+
+    transition: left 0.8s ease;
+
+    pointer-events: none;
+}
+
+
+.service-card:hover::after,
+.mini-card:hover::after {
+    left: 170%;
+}
+
+
+/* =========================================
+   CLICKED CARD GLOW
+   ========================================= */
+
+.service-card.active::before,
+.mini-card.active::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: inherit;
+
+    box-shadow:
+        inset 0 0 30px rgba(255,255,255,0.45);
+
+    pointer-events: none;
+}
