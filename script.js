@@ -1,119 +1,428 @@
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add("show");
+/* =========================================================
+   ASOMI ENTERPRISE
+   MAIN JAVASCRIPT
+   ========================================================= */
+
+
+/* =========================================================
+   YEAR
+   ========================================================= */
+
+const year = document.getElementById("year");
+
+if (year) {
+  year.textContent = new Date().getFullYear();
+}
+
+
+/* =========================================================
+   SCROLL REVEAL
+   ========================================================= */
+
+const observer = new IntersectionObserver(
+  (entries) => {
+
+    entries.forEach((entry) => {
+
+      if (entry.isIntersecting) {
+
+        entry.target.classList.add("show");
+
+      }
+
+    });
+
+  },
+  {
+    threshold: 0.12
+  }
+);
+
+
+document
+  .querySelectorAll(".reveal")
+  .forEach((element) => {
+
+    observer.observe(element);
+
   });
-}, { threshold: 0.12 });
 
-document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
 
-document.getElementById("year").textContent = new Date().getFullYear();
+/* =========================================================
+   CURSOR GOLD GLOW
+   ========================================================= */
 
 const glow = document.querySelector(".cursor-glow");
-window.addEventListener("pointermove", e => {
-  glow.style.left = e.clientX + "px";
-  glow.style.top = e.clientY + "px";
-});
 
-document.querySelectorAll(".tilt-card").forEach(card => {
-  card.addEventListener("pointermove", e => {
-    if (window.innerWidth < 800) return;
-    const r = card.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - .5;
-    const y = (e.clientY - r.top) / r.height - .5;
-    card.style.transform = `perspective(1000px) rotateX(${-y * 3}deg) rotateY(${x * 3}deg) translateY(-6px)`;
+if (glow) {
+
+  window.addEventListener("pointermove", (event) => {
+
+    glow.style.left = event.clientX + "px";
+    glow.style.top = event.clientY + "px";
+
   });
+
+}
+
+
+/* =========================================================
+   3D CARD TILT
+   ========================================================= */
+
+const tiltCards = document.querySelectorAll(
+  ".service-card, .mini-card"
+);
+
+
+tiltCards.forEach((card) => {
+
+  card.addEventListener("pointermove", (event) => {
+
+    if (window.innerWidth < 800) {
+      return;
+    }
+
+    const rect = card.getBoundingClientRect();
+
+    const x =
+      (event.clientX - rect.left) /
+      rect.width -
+      0.5;
+
+    const y =
+      (event.clientY - rect.top) /
+      rect.height -
+      0.5;
+
+
+    card.style.transform = `
+      perspective(1000px)
+      rotateX(${-y * 4}deg)
+      rotateY(${x * 4}deg)
+      translateY(-8px)
+      scale(1.01)
+    `;
+
+  });
+
+
   card.addEventListener("pointerleave", () => {
+
     card.style.transform = "";
+
   });
+
 });
 
-/* Service photo galleries: photos stay hidden until the service is clicked */
+
+/* =========================================================
+   SERVICE CARD 1–14
+   CLICK TO LIGHT
+   ========================================================= */
+
+const allServiceCards = document.querySelectorAll(
+  ".service-card, .mini-card"
+);
+
+
+allServiceCards.forEach((card) => {
+
+  card.addEventListener("click", (event) => {
+
+    /*
+      Gallery button ko card active logic se alag rakho.
+    */
+
+    if (event.target.closest(".gallery-btn")) {
+      return;
+    }
+
+
+    /*
+      Sab cards se active remove
+    */
+
+    allServiceCards.forEach((item) => {
+
+      item.classList.remove("active");
+
+    });
+
+
+    /*
+      Sirf clicked card light
+    */
+
+    card.classList.add("active");
+
+  });
+
+});
+
+/* =========================================
+   SERVICE PHOTO GALLERY
+   FINAL PHOTO ARRANGEMENT
+   ========================================= */
+
 const galleryData = {
+
+  /* ================================
+     DIGITAL PRINTING
+     4 PHOTOS
+     ================================ */
   digital: {
     title: "Digital Printing",
     subtitle: "Our digital printing facility & production work",
+
     photos: [
-      ["images/digital-1.jpg", "Digital Printing Facility — 01"],
-      ["images/digital-2.jpg", "Digital Printing Facility — 02"],
-      ["images/digital-3.jpg", "Digital Printing Production — 03"],
-      ["images/digital-4.jpg", "Digital Printing Production — 04"]
+      ["images/digital-1.jpg", "Digital Printing — 01"],
+      ["images/digital-2.jpg", "Digital Printing — 02"],
+      ["images/digital-3.jpg", "Digital Printing — 03"],
+      ["images/digital-4.jpg", "Digital Printing — 04"]
     ]
   },
+
+
+  /* ================================
+     FLEX & BANNER PRINTING
+     ONLY 2 PHOTOS
+     ================================ */
   flex: {
     title: "Flex & Banner Printing",
     subtitle: "Our large-format printing & banner production work",
+
     photos: [
       ["images/flex-1.jpg", "Flex & Banner Printing — 01"],
       ["images/flex-2.jpg", "Flex & Banner Printing — 02"]
     ]
   }
+
 };
+
+
+/* =========================================
+   GALLERY ELEMENTS
+   ========================================= */
 
 const galleryModal = document.getElementById("galleryModal");
 const galleryGrid = document.getElementById("galleryGrid");
 const galleryTitle = document.getElementById("galleryTitle");
 const gallerySubtitle = document.getElementById("gallerySubtitle");
 
-function openGallery(type){
+
+/* =========================================
+   OPEN GALLERY
+   ========================================= */
+
+function openGallery(type) {
+
   const data = galleryData[type];
-  if(!data) return;
+
+  if (!data) {
+    console.error("Gallery not found:", type);
+    return;
+  }
+
   galleryTitle.textContent = data.title;
   gallerySubtitle.textContent = data.subtitle;
-  galleryGrid.innerHTML = data.photos.map((photo, i) => `
-    <figure class="gallery-item">
-      <img src="${photo[0]}" alt="${photo[1]}" loading="${i === 0 ? "eager" : "lazy"}">
-      <figcaption>${photo[1]}</figcaption>
-    </figure>
-  `).join("");
+
+
+  galleryGrid.innerHTML = data.photos.map((photo, index) => {
+
+    return `
+      <figure class="gallery-item">
+
+        <img
+          src="${photo[0]}"
+          alt="${photo[1]}"
+          loading="${index === 0 ? "eager" : "lazy"}"
+        >
+
+        <figcaption>
+          <span class="gallery-star">✦</span>
+          ${photo[1]}
+        </figcaption>
+
+      </figure>
+    `;
+
+  }).join("");
+
+
   galleryModal.classList.add("open");
-  galleryModal.setAttribute("aria-hidden","false");
+
+  galleryModal.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
   document.body.classList.add("gallery-open");
 }
 
-function closeGallery(){
+
+/* =========================================
+   CLOSE GALLERY
+   ========================================= */
+
+function closeGallery() {
+
   galleryModal.classList.remove("open");
-  galleryModal.setAttribute("aria-hidden","true");
+
+  galleryModal.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
   document.body.classList.remove("gallery-open");
 }
 
-document.querySelectorAll(".service-trigger").forEach(card => {
-  card.addEventListener("click", e => {
-    if(e.target.closest("a")) return;
-    openGallery(card.dataset.gallery);
-  });
-});
 
-document.querySelectorAll("[data-close-gallery]").forEach(el => {
-  el.addEventListener("click", closeGallery);
-});
-
-document.addEventListener("keydown", e => {
-  if(e.key === "Escape") closeGallery();
-});
 /* =========================================
-   SERVICE CARDS 1–14
-   CLICK TO LIGHT
+   SERVICE CARD CLICK
    ========================================= */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.querySelectorAll(".service-trigger").forEach(card => {
 
-    const serviceCards = document.querySelectorAll(
-        ".services-grid .service-card"
-    );
+  card.addEventListener("click", event => {
 
-    serviceCards.forEach(function (card) {
+    /* Don't open gallery if an actual link
+       inside the card was clicked */
+    if (event.target.closest("a")) {
+      return;
+    }
 
-        card.addEventListener("click", function () {
+    const galleryType = card.dataset.gallery;
 
-            // Remove light effect from every card
-            serviceCards.forEach(function (item) {
-                item.classList.remove("active");
-            });
+    openGallery(galleryType);
 
-            // Add light effect to clicked card
-            card.classList.add("active");
+  });
 
-        });
+});
+
+
+/* =========================================
+   CLOSE BUTTON / BACKDROP
+   ========================================= */
+
+document.querySelectorAll("[data-close-gallery]").forEach(element => {
+
+  element.addEventListener("click", closeGallery);
+
+});
+
+
+/* =========================================
+   ESCAPE KEY
+   ========================================= */
+
+document.addEventListener("keydown", event => {
+
+  if (event.key === "Escape") {
+    closeGallery();
+  }
+
+});
+
+/* =========================================================
+   MOBILE SAFETY
+   ========================================================= */
+
+window.addEventListener(
+  "resize",
+  () => {
+
+    if (window.innerWidth < 800) {
+
+      tiltCards.forEach((card) => {
+
+        card.style.transform = "";
+
+      });
+
+    }
+
+  }
+);
+/* =========================================
+   ASOMI — UNIQUE TOUCH INTERACTION
+   ========================================= */
+
+document.querySelectorAll(".services-grid .service-card").forEach(card => {
+
+    card.addEventListener("pointermove", e => {
+
+        const rect = card.getBoundingClientRect();
+
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const px = (x / rect.width) * 100;
+        const py = (y / rect.height) * 100;
+
+        /* Golden light position */
+        card.style.setProperty("--tx", `${px}%`);
+        card.style.setProperty("--ty", `${py}%`);
+
+        /* 3D movement */
+        if (window.innerWidth > 800) {
+
+            const rotateY = ((px - 50) / 50) * 2.5;
+            const rotateX = ((50 - py) / 50) * 2.5;
+
+            card.style.setProperty("--rx", `${rotateX}deg`);
+            card.style.setProperty("--ry", `${rotateY}deg`);
+        }
+
+        card.classList.add("touching");
+
+    });
+
+
+    card.addEventListener("pointerdown", e => {
+
+        const rect = card.getBoundingClientRect();
+
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        card.style.setProperty(
+            "--tx",
+            `${(x / rect.width) * 100}%`
+        );
+
+        card.style.setProperty(
+            "--ty",
+            `${(y / rect.height) * 100}%`
+        );
+
+        /* Restart ripple */
+        card.classList.remove("touching");
+
+        void card.offsetWidth;
+
+        card.classList.add("touching");
+
+    });
+
+
+    card.addEventListener("pointerleave", () => {
+
+        card.classList.remove("touching");
+
+        card.style.setProperty("--tx", "50%");
+        card.style.setProperty("--ty", "50%");
+        card.style.setProperty("--rx", "0deg");
+        card.style.setProperty("--ry", "0deg");
+
+    });
+
+
+    card.addEventListener("pointerup", () => {
+
+        setTimeout(() => {
+            card.classList.remove("touching");
+        }, 500);
 
     });
 
