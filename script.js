@@ -212,7 +212,7 @@ const gallerySubtitle = document.getElementById("gallerySubtitle");
 
 
 /* =========================================
-   OPEN GALLERY
+   OPEN GALLERY — SECURE VERSION
    ========================================= */
 
 function openGallery(type) {
@@ -220,35 +220,75 @@ function openGallery(type) {
   const data = galleryData[type];
 
   if (!data) {
-    console.error("Gallery not found:", type);
+    console.warn("Invalid gallery request blocked.");
     return;
   }
 
+  if (!galleryModal || !galleryGrid) {
+    console.warn("Gallery elements not found.");
+    return;
+  }
+
+  /* Safe text insertion */
   galleryTitle.textContent = data.title;
   gallerySubtitle.textContent = data.subtitle;
 
+  /* Clear existing gallery safely */
+  galleryGrid.replaceChildren();
 
-  galleryGrid.innerHTML = data.photos.map((photo, index) => {
+  data.photos.forEach((photo, index) => {
 
-    return `
-      <figure class="gallery-item">
+    const figure = document.createElement("figure");
+    figure.className = "gallery-item";
 
-        <img
-          src="${photo[0]}"
-          alt="${photo[1]}"
-          loading="${index === 0 ? "eager" : "lazy"}"
-        >
+    const image = document.createElement("img");
 
-        <figcaption>
-          <span class="gallery-star">✦</span>
-          ${photo[1]}
-        </figcaption>
+    /*
+      Only allow local images.
+      This prevents unexpected external image URLs.
+    */
+    if (
+      typeof photo[0] !== "string" ||
+      !photo[0].startsWith("images/") ||
+      !/\.(jpg|jpeg|png|webp|gif)$/i.test(photo[0])
+    ) {
+      console.warn("Blocked invalid image path:", photo[0]);
+      return;
+    }
 
-      </figure>
-    `;
+    image.src = photo[0];
 
-  }).join("");
+    image.alt =
+      typeof photo[1] === "string"
+        ? photo[1]
+        : "Asomi Enterprise printing work";
 
+    image.loading =
+      index === 0
+        ? "eager"
+        : "lazy";
+
+    image.decoding = "async";
+
+    const caption = document.createElement("figcaption");
+
+    const star = document.createElement("span");
+    star.className = "gallery-star";
+    star.textContent = "✦";
+
+    caption.appendChild(star);
+    caption.appendChild(
+      document.createTextNode(
+        " " + image.alt
+      )
+    );
+
+    figure.appendChild(image);
+    figure.appendChild(caption);
+
+    galleryGrid.appendChild(figure);
+
+  });
 
   galleryModal.classList.add("open");
 
@@ -259,48 +299,6 @@ function openGallery(type) {
 
   document.body.classList.add("gallery-open");
 }
-
-
-/* =========================================
-   CLOSE GALLERY
-   ========================================= */
-
-function closeGallery() {
-
-  galleryModal.classList.remove("open");
-
-  galleryModal.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-  document.body.classList.remove("gallery-open");
-}
-
-
-/* =========================================
-   SERVICE CARD CLICK
-   ========================================= */
-
-document.querySelectorAll(".service-trigger").forEach(card => {
-
-  card.addEventListener("click", event => {
-
-    /* Don't open gallery if an actual link
-       inside the card was clicked */
-    if (event.target.closest("a")) {
-      return;
-    }
-
-    const galleryType = card.dataset.gallery;
-
-    openGallery(galleryType);
-
-  });
-
-});
-
-
 /* =========================================
    CLOSE BUTTON / BACKDROP
    ========================================= */
