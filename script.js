@@ -1,429 +1,747 @@
 /* =========================================================
    ASOMI ENTERPRISE
-   MAIN JAVASCRIPT
-   ========================================================= */
+   WEBSITE JAVASCRIPT
+========================================================= */
 
 
 /* =========================================================
-   YEAR
-   ========================================================= */
+   MOBILE NAVIGATION
+========================================================= */
 
-const year = document.getElementById("year");
+const menuButton = document.getElementById("menuButton");
+const nav = document.getElementById("nav");
 
-if (year) {
-  year.textContent = new Date().getFullYear();
+menuButton.addEventListener("click", () => {
+
+    nav.classList.toggle("open");
+
+    const icon = menuButton.querySelector("i");
+
+    if (nav.classList.contains("open")) {
+        icon.classList.remove("fa-bars");
+        icon.classList.add("fa-xmark");
+    } else {
+        icon.classList.remove("fa-xmark");
+        icon.classList.add("fa-bars");
+    }
+
+});
+
+
+/* CLOSE MOBILE MENU AFTER CLICK */
+
+document.querySelectorAll(".nav-link").forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        nav.classList.remove("open");
+
+        const icon = menuButton.querySelector("i");
+
+        icon.classList.remove("fa-xmark");
+        icon.classList.add("fa-bars");
+
+    });
+
+});
+
+
+/* =========================================================
+   HEADER SCROLL EFFECT
+========================================================= */
+
+const header = document.getElementById("header");
+
+window.addEventListener("scroll", () => {
+
+    if (window.scrollY > 30) {
+        header.classList.add("scrolled");
+    } else {
+        header.classList.remove("scrolled");
+    }
+
+});
+
+
+/* =========================================================
+   ACTIVE NAVIGATION
+========================================================= */
+
+const sections = document.querySelectorAll("section[id]");
+const navLinks = document.querySelectorAll(".nav-link");
+
+window.addEventListener("scroll", () => {
+
+    let currentSection = "";
+
+    sections.forEach(section => {
+
+        const sectionTop = section.offsetTop - 150;
+        const sectionHeight = section.offsetHeight;
+
+        if (
+            window.scrollY >= sectionTop &&
+            window.scrollY < sectionTop + sectionHeight
+        ) {
+            currentSection = section.getAttribute("id");
+        }
+
+    });
+
+    navLinks.forEach(link => {
+
+        link.classList.remove("active");
+
+        if (
+            link.getAttribute("href") === `#${currentSection}`
+        ) {
+            link.classList.add("active");
+        }
+
+    });
+
+});
+
+
+/* =========================================================
+   SERVICE GALLERY DATA
+=========================================================
+
+   IMPORTANT:
+   Replace these image URLs with your own photos later.
+
+========================================================= */
+
+const galleryData = {
+
+    "Digital Printing": [
+    "images/digital-1.jpg",
+    "images/digital-2.jpg",
+    "images/digital-3.jpg",
+    "images/digital-4.jpg",
+    "images/digital-5.jpg",
+    "images/digital-6.jpg"
+],
+
+    "Flex & Banner Printing": [
+     "images/flex-1.jpg",
+     "images/flex-2.jpg",
+     "images/flex-3.jpg",
+     "images/flex-4.jpg"
+    ],
+
+    "Visiting Cards": [
+        "images/visiting-card-1.jpg",
+        "images/visiting-card-2.jpg",
+        "images/visiting-card-3.jpg",
+        "images/visiting-card-4.jpg"
+    ],
+
+    "Pamphlets & Flyers": [
+        "images/pamphlet-1.jpg",
+        "images/pamphlet-2.jpg",
+        "images/pamphlet-3.jpg",
+        "images/pamphlet-4.jpg"
+    ],
+
+    "Brochures": [
+        "images/brochure-1.jpg",
+        "images/brochure-2.jpg",
+        "images/brochure-3.jpg",
+        "images/brochure-4.jpg"
+    ],
+
+    "Letterheads": [
+        "images/letterhead-1.jpg",
+        "images/letterhead-2.jpg",
+        "images/letterhead-3.jpg",
+        "images/letterhead-4.jpg"
+    ],
+
+    "Bill Books": [
+        "images/bill-book-1.jpg",
+        "images/bill-book-2.jpg",
+        "images/bill-book-3.jpg",
+        "images/bill-book-4.jpg"
+    ],
+
+    "ID Cards": [
+        "images/id-card-1.jpg",
+        "images/id-card-2.jpg",
+        "images/id-card-3.jpg",
+        "images/id-card-4.jpg"
+    ],
+
+    "Certificates": [
+        "images/certificate-1.jpg",
+        "images/certificate-2.jpg",
+        "images/certificate-3.jpg",
+        "images/certificate-4.jpg"
+    ],
+
+    "Stickers & Labels": [
+        "images/sticker-1.jpg",
+        "images/sticker-2.jpg",
+        "images/sticker-3.jpg",
+        "images/sticker-4.jpg"
+    ],
+
+    "Photo Printing": [
+        "images/photo-1.jpg",
+        "images/photo-2.jpg",
+        "images/photo-3.jpg",
+        "images/photo-4.jpg"
+    ],
+
+    "Custom Printing Services": [
+        "images/custom-1.jpg",
+        "images/custom-2.jpg",
+        "images/custom-3.jpg",
+        "images/custom-4.jpg"
+    ],
+
+    "Book Printing": [
+        "images/book-1.jpg",
+        "images/book-2.jpg",
+        "images/book-3.jpg",
+        "images/book-4.jpg"
+    ]
+
+};
+
+
+/* =========================================================
+   GALLERY ELEMENTS
+========================================================= */
+
+const galleryModal = document.getElementById("galleryModal");
+const galleryClose = document.getElementById("galleryClose");
+const galleryOverlay = document.getElementById("galleryOverlay");
+
+const galleryTitle = document.getElementById("galleryTitle");
+const galleryCounter = document.getElementById("galleryCounter");
+
+const galleryMainImage = document.getElementById("galleryMainImage");
+const galleryThumbnails = document.getElementById("galleryThumbnails");
+
+const galleryPrev = document.getElementById("galleryPrev");
+const galleryNext = document.getElementById("galleryNext");
+
+
+let currentGallery = [];
+let currentIndex = 0;
+
+
+/* =========================================================
+   OPEN GALLERY
+========================================================= */
+
+document.querySelectorAll(".service-card").forEach(card => {
+
+    card.addEventListener("click", () => {
+
+        const serviceName = card.dataset.service;
+
+        openGallery(serviceName);
+
+    });
+
+});
+
+
+function openGallery(serviceName) {
+
+    currentGallery = galleryData[serviceName] || [];
+
+    currentIndex = 0;
+
+    galleryTitle.textContent = serviceName;
+
+    renderGallery();
+
+    galleryModal.classList.add("active");
+
+    document.body.classList.add("modal-open");
+
+}
+
+
+/* =========================================================
+   RENDER GALLERY
+========================================================= */
+
+function renderGallery() {
+
+    if (!currentGallery.length) {
+        return;
+    }
+
+
+    /* -----------------------------------------
+       IMAGE EXIT
+    ----------------------------------------- */
+
+    galleryMainImage.classList.remove(
+        "gallery-enter"
+    );
+
+    galleryMainImage.style.opacity = "0";
+
+
+    setTimeout(() => {
+
+        /* -----------------------------------------
+           CHANGE IMAGE
+        ----------------------------------------- */
+
+        galleryMainImage.src =
+            currentGallery[currentIndex];
+
+
+        /* -----------------------------------------
+           IMAGE ENTER
+        ----------------------------------------- */
+
+        galleryMainImage.style.opacity = "1";
+
+        void galleryMainImage.offsetWidth;
+
+        galleryMainImage.classList.add(
+            "gallery-enter"
+        );
+
+    }, 180);
+
+
+    /* -----------------------------------------
+       COUNTER
+    ----------------------------------------- */
+
+    galleryCounter.textContent =
+        `${String(currentIndex + 1).padStart(2, "0")} / ${String(currentGallery.length).padStart(2, "0")}`;
+
+
+    /* -----------------------------------------
+       THUMBNAILS
+    ----------------------------------------- */
+
+    galleryThumbnails.innerHTML = "";
+
+
+    currentGallery.forEach((image, index) => {
+
+        const thumbnail =
+            document.createElement("button");
+
+
+        thumbnail.className =
+            "gallery-thumb";
+
+
+        if (index === currentIndex) {
+
+            thumbnail.classList.add(
+                "active"
+            );
+
+        }
+
+
+        thumbnail.innerHTML = `
+            <img
+                src="${image}"
+                alt="Gallery image ${index + 1}"
+                loading="lazy"
+            >
+        `;
+
+
+        thumbnail.addEventListener(
+            "click",
+            () => {
+
+                currentIndex = index;
+
+                renderGallery();
+
+            }
+        );
+
+
+        galleryThumbnails.appendChild(
+            thumbnail
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   NEXT IMAGE
+========================================================= */
+
+function nextImage() {
+
+    if (!currentGallery.length) return;
+
+    currentIndex++;
+
+    if (currentIndex >= currentGallery.length) {
+        currentIndex = 0;
+    }
+
+    renderGallery();
+
+}
+
+
+/* =========================================================
+   PREVIOUS IMAGE
+========================================================= */
+
+function previousImage() {
+
+    if (!currentGallery.length) return;
+
+    currentIndex--;
+
+    if (currentIndex < 0) {
+        currentIndex = currentGallery.length - 1;
+    }
+
+    renderGallery();
+
+}
+
+
+galleryNext.addEventListener("click", nextImage);
+galleryPrev.addEventListener("click", previousImage);
+
+
+/* =========================================================
+   CLOSE GALLERY
+========================================================= */
+
+function closeGallery() {
+
+    galleryModal.classList.remove("active");
+
+    document.body.classList.remove("modal-open");
+
+}
+
+
+galleryClose.addEventListener("click", closeGallery);
+galleryOverlay.addEventListener("click", closeGallery);
+
+
+/* =========================================================
+   KEYBOARD CONTROLS
+========================================================= */
+
+document.addEventListener("keydown", event => {
+
+    if (!galleryModal.classList.contains("active")) {
+        return;
+    }
+
+    if (event.key === "Escape") {
+        closeGallery();
+    }
+
+    if (event.key === "ArrowRight") {
+        nextImage();
+    }
+
+    if (event.key === "ArrowLeft") {
+        previousImage();
+    }
+
+});
+
+
+/* =========================================================
+   TOUCH / SWIPE SUPPORT
+========================================================= */
+
+let touchStartX = 0;
+let touchEndX = 0;
+
+
+galleryMainImage.addEventListener("touchstart", event => {
+
+    touchStartX = event.changedTouches[0].screenX;
+
+});
+
+
+galleryMainImage.addEventListener("touchend", event => {
+
+    touchEndX = event.changedTouches[0].screenX;
+
+    handleSwipe();
+
+});
+
+
+function handleSwipe() {
+
+    const distance = touchEndX - touchStartX;
+
+    if (Math.abs(distance) < 50) {
+        return;
+    }
+
+    if (distance < 0) {
+        nextImage();
+    } else {
+        previousImage();
+    }
+
 }
 
 
 /* =========================================================
    SCROLL REVEAL
-   ========================================================= */
+========================================================= */
 
-const observer = new IntersectionObserver(
-  (entries) => {
-
-    entries.forEach((entry) => {
-
-      if (entry.isIntersecting) {
-
-        entry.target.classList.add("show");
-
-      }
-
-    });
-
-  },
-  {
-    threshold: 0.12
-  }
+const revealElements = document.querySelectorAll(
+    ".service-card, .why-card, .contact-card, .about-content, .about-image"
 );
 
 
-document
-  .querySelectorAll(".reveal")
-  .forEach((element) => {
+const revealObserver = new IntersectionObserver(
+    entries => {
 
-    observer.observe(element);
+        entries.forEach(entry => {
 
-  });
+            if (entry.isIntersecting) {
+
+                entry.target.style.opacity = "1";
+                entry.target.style.transform = "translateY(0)";
+
+                revealObserver.unobserve(entry.target);
+
+            }
+
+        });
+
+    },
+    {
+        threshold: 0.08
+    }
+);
+
+
+revealElements.forEach(element => {
+
+    element.style.opacity = "0";
+    element.style.transform = "translateY(25px)";
+    element.style.transition = "opacity 0.7s ease, transform 0.7s ease";
+
+    revealObserver.observe(element);
+
+});
 
 
 /* =========================================================
-   CURSOR GOLD GLOW
-   ========================================================= */
+   PREVENT BROKEN IMAGE DISPLAY
+========================================================= */
 
-const glow = document.querySelector(".cursor-glow");
+galleryMainImage.addEventListener("error", () => {
 
-if (glow) {
+    galleryMainImage.alt = "Gallery image unavailable";
 
-  window.addEventListener("pointermove", (event) => {
+});
 
-    glow.style.left = event.clientX + "px";
-    glow.style.top = event.clientY + "px";
 
-  });
+/* =========================================================
+   CONSOLE MESSAGE
+========================================================= */
 
+console.log(
+    "%cASOMI ENTERPRISE",
+    "font-size:24px;font-weight:bold;"
+);
+
+console.log(
+    "Premium Printing Services • Guwahati"
+);
+/* =========================================================
+   ASOMI ENTERPRISE
+   PREMIUM MOUSE + SPACE + GALLERY ANIMATIONS
+========================================================= */
+
+
+/* =========================================================
+   1. MOUSE FOLLOW BACKGROUND
+========================================================= */
+
+const root = document.documentElement;
+
+let mouseTargetX = window.innerWidth / 2;
+let mouseTargetY = window.innerHeight / 2;
+
+let mouseCurrentX = mouseTargetX;
+let mouseCurrentY = mouseTargetY;
+
+
+document.addEventListener("mousemove", (event) => {
+
+    mouseTargetX = event.clientX;
+    mouseTargetY = event.clientY;
+
+});
+
+
+function animateMouseBackground() {
+
+    mouseCurrentX +=
+        (mouseTargetX - mouseCurrentX) * 0.08;
+
+    mouseCurrentY +=
+        (mouseTargetY - mouseCurrentY) * 0.08;
+
+
+    root.style.setProperty(
+        "--mouse-x",
+        `${mouseCurrentX}px`
+    );
+
+    root.style.setProperty(
+        "--mouse-y",
+        `${mouseCurrentY}px`
+    );
+
+
+    requestAnimationFrame(
+        animateMouseBackground
+    );
 }
 
 
-/* =========================================================
-   3D CARD TILT
-   ========================================================= */
+animateMouseBackground();
 
-const tiltCards = document.querySelectorAll(
-  ".service-card, .mini-card"
-);
-
-
-tiltCards.forEach((card) => {
-
-  card.addEventListener("pointermove", (event) => {
-
-    if (window.innerWidth < 800) {
-      return;
-    }
-
-    const rect = card.getBoundingClientRect();
-
-    const x =
-      (event.clientX - rect.left) /
-      rect.width -
-      0.5;
-
-    const y =
-      (event.clientY - rect.top) /
-      rect.height -
-      0.5;
-
-
-    card.style.transform = `
-      perspective(1000px)
-      rotateX(${-y * 4}deg)
-      rotateY(${x * 4}deg)
-      translateY(-8px)
-      scale(1.01)
-    `;
-
-  });
-
-
-  card.addEventListener("pointerleave", () => {
-
-    card.style.transform = "";
-
-  });
-
-});
 
 
 /* =========================================================
-   SERVICE CARD 1–14
-   CLICK TO LIGHT
-   ========================================================= */
+   2. SPACE PARTICLES
+========================================================= */
 
-const allServiceCards = document.querySelectorAll(
-  ".service-card, .mini-card"
-);
+const particleContainer =
+    document.querySelector(".space-particles");
 
 
-allServiceCards.forEach((card) => {
+if (particleContainer) {
 
-  card.addEventListener("click", (event) => {
+    const particleCount =
+        window.innerWidth <= 768 ? 18 : 35;
 
-    /*
-      Gallery button ko card active logic se alag rakho.
-    */
 
-    if (event.target.closest(".gallery-btn")) {
-      return;
-    }
+    for (let i = 0; i < particleCount; i++) {
 
+        const particle =
+            document.createElement("span");
 
-    /*
-      Sab cards se active remove
-    */
 
-    allServiceCards.forEach((item) => {
+        particle.className =
+            "space-particle";
 
-      item.classList.remove("active");
 
-    });
+        particle.style.left =
+            `${Math.random() * 100}%`;
 
+        particle.style.top =
+            `${Math.random() * 100}%`;
 
-    /*
-      Sirf clicked card light
-    */
 
-    card.classList.add("active");
-
-  });
-
-});
-
-/* =========================================
-   SERVICE PHOTO GALLERY
-   FINAL PHOTO ARRANGEMENT
-   ========================================= */
-
-const galleryData = {
-
-  /* ================================
-     DIGITAL PRINTING
-     4 PHOTOS
-     ================================ */
-  digital: {
-    title: "Digital Printing",
-    subtitle: "Our digital printing facility & production work",
-
-    photos: [
-      ["images/digital-1.jpg", "Digital Printing — 01"],
-      ["images/digital-2.jpg", "Digital Printing — 02"],
-      ["images/digital-3.jpg", "Digital Printing — 03"],
-      ["images/digital-4.jpg", "Digital Printing — 04"]
-    ]
-  },
-
-
-  /* ================================
-     FLEX & BANNER PRINTING
-     ONLY 2 PHOTOS
-     ================================ */
-  flex: {
-    title: "Flex & Banner Printing",
-    subtitle: "Our large-format printing & banner production work",
-
-    photos: [
-      ["images/flex-1.jpg", "Flex & Banner Printing — 01"],
-      ["images/flex-2.jpg", "Flex & Banner Printing — 02"]
-    ]
-  }
-
-};
-
-
-/* =========================================
-   GALLERY ELEMENTS
-   ========================================= */
-
-const galleryModal = document.getElementById("galleryModal");
-const galleryGrid = document.getElementById("galleryGrid");
-const galleryTitle = document.getElementById("galleryTitle");
-const gallerySubtitle = document.getElementById("gallerySubtitle");
-
-
-/* =========================================
-   OPEN GALLERY
-   ========================================= */
-
-function openGallery(type) {
-
-  const data = galleryData[type];
-
-  if (!data) {
-    console.error("Gallery not found:", type);
-    return;
-  }
-
-  galleryTitle.textContent = data.title;
-  gallerySubtitle.textContent = data.subtitle;
-
-
-  galleryGrid.innerHTML = data.photos.map((photo, index) => {
-
-    return `
-      <figure class="gallery-item">
-
-        <img
-          src="${photo[0]}"
-          alt="${photo[1]}"
-          loading="${index === 0 ? "eager" : "lazy"}"
-        >
-
-        <figcaption>
-          <span class="gallery-star">✦</span>
-          ${photo[1]}
-        </figcaption>
-
-      </figure>
-    `;
-
-  }).join("");
-
-
-  galleryModal.classList.add("open");
-
-  galleryModal.setAttribute(
-    "aria-hidden",
-    "false"
-  );
-
-  document.body.classList.add("gallery-open");
-}
-
-
-/* =========================================
-   CLOSE GALLERY
-   ========================================= */
-
-function closeGallery() {
-
-  galleryModal.classList.remove("open");
-
-  galleryModal.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-  document.body.classList.remove("gallery-open");
-}
-
-
-/* =========================================
-   SERVICE CARD CLICK
-   ========================================= */
-
-document.querySelectorAll(".service-trigger").forEach(card => {
-
-  card.addEventListener("click", event => {
-
-    /* Don't open gallery if an actual link
-       inside the card was clicked */
-    if (event.target.closest("a")) {
-      return;
-    }
-
-    const galleryType = card.dataset.gallery;
-
-    openGallery(galleryType);
-
-  });
-
-});
-
-
-/* =========================================
-   CLOSE BUTTON / BACKDROP
-   ========================================= */
-
-document.querySelectorAll("[data-close-gallery]").forEach(element => {
-
-  element.addEventListener("click", closeGallery);
-
-});
-
-
-/* =========================================
-   ESCAPE KEY
-   ========================================= */
-
-document.addEventListener("keydown", event => {
-
-  if (event.key === "Escape") {
-    closeGallery();
-  }
-
-});
-
-/* =========================================================
-   MOBILE SAFETY
-   ========================================================= */
-
-window.addEventListener(
-  "resize",
-  () => {
-
-    if (window.innerWidth < 800) {
-
-      tiltCards.forEach((card) => {
-
-        card.style.transform = "";
-
-      });
-
-    }
-
-  }
-);
-/* =========================================
-   ASOMI — UNIQUE TOUCH INTERACTION
-   ========================================= */
-
-document.querySelectorAll(".services-grid .service-card").forEach(card => {
-
-    card.addEventListener("pointermove", e => {
-
-        const rect = card.getBoundingClientRect();
-
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        const px = (x / rect.width) * 100;
-        const py = (y / rect.height) * 100;
-
-        /* Golden light position */
-        card.style.setProperty("--tx", `${px}%`);
-        card.style.setProperty("--ty", `${py}%`);
-
-        /* 3D movement */
-        if (window.innerWidth > 800) {
-
-            const rotateY = ((px - 50) / 50) * 2.5;
-            const rotateX = ((50 - py) / 50) * 2.5;
-
-            card.style.setProperty("--rx", `${rotateX}deg`);
-            card.style.setProperty("--ry", `${rotateY}deg`);
-        }
-
-        card.classList.add("touching");
-
-    });
-
-
-    card.addEventListener("pointerdown", e => {
-
-        const rect = card.getBoundingClientRect();
-
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        card.style.setProperty(
-            "--tx",
-            `${(x / rect.width) * 100}%`
+        particle.style.setProperty(
+            "--particle-x",
+            `${(Math.random() - 0.5) * 100}px`
         );
 
-        card.style.setProperty(
-            "--ty",
-            `${(y / rect.height) * 100}%`
+        particle.style.setProperty(
+            "--particle-y",
+            `${(Math.random() - 0.5) * 100}px`
         );
 
-        /* Restart ripple */
-        card.classList.remove("touching");
 
-        void card.offsetWidth;
-
-        card.classList.add("touching");
-
-    });
+        particle.style.setProperty(
+            "--particle-duration",
+            `${5 + Math.random() * 8}s`
+        );
 
 
-    card.addEventListener("pointerleave", () => {
-
-        card.classList.remove("touching");
-
-        card.style.setProperty("--tx", "50%");
-        card.style.setProperty("--ty", "50%");
-        card.style.setProperty("--rx", "0deg");
-        card.style.setProperty("--ry", "0deg");
-
-    });
+        particle.style.setProperty(
+            "--particle-opacity",
+            `${0.25 + Math.random() * 0.5}`
+        );
 
 
-    card.addEventListener("pointerup", () => {
+        particle.style.animationDelay =
+            `${Math.random() * 6}s`;
+
+
+        particleContainer.appendChild(
+            particle
+        );
+    }
+}
+
+
+
+/* =========================================================
+   3. GALLERY IMAGE ANIMATION
+========================================================= */
+
+function animateGalleryImage() {
+
+    if (!galleryMainImage) {
+        return;
+    }
+
+
+    galleryMainImage.classList.remove(
+        "gallery-enter"
+    );
+
+
+    /*
+       Force browser reflow so the animation
+       can restart every time the image changes.
+    */
+    void galleryMainImage.offsetWidth;
+
+
+    galleryMainImage.classList.add(
+        "gallery-enter"
+    );
+}
+
+
+/* =========================================================
+   UPDATE YOUR EXISTING renderGallery()
+========================================================= */
+
+const originalRenderGallery =
+    renderGallery;
+
+
+/*
+   We don't replace the gallery system.
+   We simply add animation after rendering.
+*/
+
+window.renderGalleryWithAnimation =
+    function () {
+
+        originalRenderGallery();
 
         setTimeout(() => {
-            card.classList.remove("touching");
-        }, 500);
 
-    });
+            animateGalleryImage();
 
-});
+        }, 120);
+
+    };
