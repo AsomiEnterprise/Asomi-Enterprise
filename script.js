@@ -180,10 +180,26 @@ const galleryData = {
     ],
 
     "Stickers & Labels": [
-        "images/sticker-1.jpg",
-        "images/sticker-2.jpg",
-        "images/sticker-3.jpg",
-        "images/sticker-4.jpg"
+        {
+            type: "image",
+            src: "images/sticker-1.jpg"
+        },
+        {
+         type: "image",
+            src: "images/sticker-2.jpg"
+        },
+        {
+            type: "image",
+            src: "images/sticker-3.jpg"
+        },
+        {
+            type: "image",
+            src: "images/sticker-4.jpg"
+        },
+        {
+            type: "video",
+            src: "images/videos/sticker-5.mp4"
+        }
     ],
 
     "Photo Printing": [
@@ -276,106 +292,242 @@ function renderGallery() {
         return;
     }
 
+    /* =========================================
+       SUPPORT BOTH FORMATS
 
-    /* -----------------------------------------
-       IMAGE EXIT
-    ----------------------------------------- */
+       OLD:
+       "images/photo-1.jpg"
 
-    galleryMainImage.classList.remove(
-        "gallery-enter"
-    );
+       NEW:
+       {
+           type: "image",
+           src: "images/photo-1.jpg"
+       }
+    ========================================= */
 
-    galleryMainImage.style.opacity = "0";
+    const rawItem = currentGallery[currentIndex];
+
+    const item =
+        typeof rawItem === "string"
+            ? {
+                type: "image",
+                src: rawItem
+            }
+            : rawItem;
 
 
-    setTimeout(() => {
+    const galleryImage =
+        document.getElementById("galleryMainImage");
 
-        /* -----------------------------------------
-           CHANGE IMAGE
-        ----------------------------------------- */
-
-        galleryMainImage.src =
-            currentGallery[currentIndex];
+    const galleryVideo =
+        document.getElementById("galleryMainVideo");
 
 
-        /* -----------------------------------------
-           IMAGE ENTER
-        ----------------------------------------- */
+    /* SAFETY */
 
-        galleryMainImage.style.opacity = "1";
+    if (!galleryImage || !galleryVideo) {
 
-        void galleryMainImage.offsetWidth;
+        console.error(
+            "Gallery image/video element missing."
+        );
 
-        galleryMainImage.classList.add(
+        return;
+    }
+
+
+    /* =========================================
+       HIDE BOTH MEDIA
+    ========================================= */
+
+    galleryImage.style.display = "none";
+
+    galleryVideo.style.display = "none";
+
+    galleryVideo.pause();
+
+    galleryVideo.removeAttribute("src");
+
+    galleryVideo.load();
+
+
+    /* =========================================
+       IMAGE
+    ========================================= */
+
+    if (item.type === "image") {
+
+        galleryImage.style.display = "block";
+
+        galleryImage.classList.remove(
             "gallery-enter"
         );
 
-    }, 180);
+        galleryImage.style.opacity = "0";
 
 
-    /* -----------------------------------------
+        setTimeout(() => {
+
+            galleryImage.src = item.src;
+
+            galleryImage.style.opacity = "1";
+
+            void galleryImage.offsetWidth;
+
+            galleryImage.classList.add(
+                "gallery-enter"
+            );
+
+        }, 180);
+
+    }
+
+
+    /* =========================================
+       VIDEO
+    ========================================= */
+
+    else if (item.type === "video") {
+
+        galleryVideo.style.display = "block";
+
+        galleryVideo.src = item.src;
+
+        galleryVideo.load();
+
+        galleryVideo.classList.remove(
+            "gallery-enter"
+        );
+
+        void galleryVideo.offsetWidth;
+
+        galleryVideo.classList.add(
+            "gallery-enter"
+        );
+
+        galleryVideo.play().catch(() => {
+
+            console.log(
+                "Video requires user interaction."
+            );
+
+        });
+
+    }
+
+
+    /* =========================================
        COUNTER
-    ----------------------------------------- */
+    ========================================= */
 
     galleryCounter.textContent =
         `${String(currentIndex + 1).padStart(2, "0")} / ${String(currentGallery.length).padStart(2, "0")}`;
 
 
-    /* -----------------------------------------
+    /* =========================================
        THUMBNAILS
-    ----------------------------------------- */
+    ========================================= */
 
     galleryThumbnails.innerHTML = "";
 
 
-    currentGallery.forEach((image, index) => {
+    currentGallery.forEach(
+        (galleryItem, index) => {
 
-        const thumbnail =
-            document.createElement("button");
-
-
-        thumbnail.className =
-            "gallery-thumb";
+            const thumbnail =
+                document.createElement("button");
 
 
-        if (index === currentIndex) {
+            thumbnail.className =
+                "gallery-thumb";
 
-            thumbnail.classList.add(
-                "active"
+
+            if (index === currentIndex) {
+
+                thumbnail.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            /* =================================
+               OLD IMAGE FORMAT
+            ================================= */
+
+            if (typeof galleryItem === "string") {
+
+                thumbnail.innerHTML = `
+                    <img
+                        src="${galleryItem}"
+                        alt="Gallery image ${index + 1}"
+                        loading="lazy"
+                    >
+                `;
+
+            }
+
+
+            /* =================================
+               NEW IMAGE FORMAT
+            ================================= */
+
+            else if (
+                galleryItem.type === "image"
+            ) {
+
+                thumbnail.innerHTML = `
+                    <img
+                        src="${galleryItem.src}"
+                        alt="Gallery image ${index + 1}"
+                        loading="lazy"
+                    >
+                `;
+
+            }
+
+
+            /* =================================
+               VIDEO FORMAT
+            ================================= */
+
+            else if (
+                galleryItem.type === "video"
+            ) {
+
+                thumbnail.innerHTML = `
+                    <div class="video-thumbnail">
+                        <i class="fa-solid fa-play"></i>
+                        <span>VIDEO</span>
+                    </div>
+                `;
+
+            }
+
+
+            /* =================================
+               THUMBNAIL CLICK
+            ================================= */
+
+            thumbnail.addEventListener(
+                "click",
+                () => {
+
+                    currentIndex = index;
+
+                    renderGallery();
+
+                }
+            );
+
+
+            galleryThumbnails.appendChild(
+                thumbnail
             );
 
         }
-
-
-        thumbnail.innerHTML = `
-            <img
-                src="${image}"
-                alt="Gallery image ${index + 1}"
-                loading="lazy"
-            >
-        `;
-
-
-        thumbnail.addEventListener(
-            "click",
-            () => {
-
-                currentIndex = index;
-
-                renderGallery();
-
-            }
-        );
-
-
-        galleryThumbnails.appendChild(
-            thumbnail
-        );
-
-    });
+    );
 
 }
-
 
 /* =========================================================
    NEXT IMAGE
