@@ -896,4 +896,373 @@ window.renderGalleryWithAnimation =
 
         }, 120);
 
-    };
+};
+/* =========================================================
+   ASOMI ENTERPRISE
+   SPARKLE / PARTICLE CURSOR
+========================================================= */
+
+(() => {
+
+    /* =========================================
+       DESKTOP ONLY
+    ========================================= */
+
+    if (window.innerWidth <= 768) {
+        return;
+    }
+
+
+    const cursor =
+        document.getElementById("customCursor");
+
+    const sparkleContainer =
+        document.getElementById(
+            "cursorSparkleContainer"
+        );
+
+
+    if (!cursor || !sparkleContainer) {
+        return;
+    }
+
+
+    /* =========================================
+       MOUSE POSITION
+    ========================================= */
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+
+    let currentX = mouseX;
+    let currentY = mouseY;
+
+
+    let lastSparkX = mouseX;
+    let lastSparkY = mouseY;
+
+
+    let mouseMoving = false;
+
+
+    /* =========================================
+       MOUSE MOVE
+    ========================================= */
+
+    document.addEventListener(
+        "mousemove",
+        (event) => {
+
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+
+            mouseMoving = true;
+
+        }
+    );
+
+
+    /* =========================================
+       SMOOTH CURSOR
+    ========================================= */
+
+    function animateCursor() {
+
+        currentX +=
+            (mouseX - currentX) * 0.22;
+
+        currentY +=
+            (mouseY - currentY) * 0.22;
+
+        /* =====================================
+           CREATE SPARKLE
+        ===================================== */
+
+        const dx =
+            currentX - lastSparkX;
+
+        const dy =
+            currentY - lastSparkY;
+
+        const distance =
+            Math.sqrt(
+                dx * dx +
+                dy * dy
+            );
+
+
+        if (
+            mouseMoving &&
+            distance > 7
+        ) {
+
+            createSpark(
+                currentX,
+                currentY,
+                dx,
+                dy
+            );
+
+            lastSparkX = currentX;
+            lastSparkY = currentY;
+
+        }
+
+
+        mouseMoving = false;
+
+
+        requestAnimationFrame(
+            animateCursor
+        );
+
+    }
+
+
+    animateCursor();
+
+
+    /* =========================================
+       CREATE SPARKLE
+    ========================================= */
+
+    function createSpark(
+        x,
+        y,
+        directionX,
+        directionY
+    ) {
+
+        const spark =
+            document.createElement("span");
+
+
+        spark.className =
+            "cursor-spark";
+
+
+        const size =
+            2 + Math.random() * 4;
+
+
+        const life =
+            450 + Math.random() * 350;
+
+
+        const spread =
+            8 + Math.random() * 18;
+
+
+        const randomX =
+            (Math.random() - 0.5) *
+            spread;
+
+
+        const randomY =
+            (Math.random() - 0.5) *
+            spread;
+
+
+        const driftX =
+            -directionX * 0.45 +
+            randomX;
+
+
+        const driftY =
+            -directionY * 0.45 +
+            randomY;
+
+
+        spark.style.setProperty(
+            "--spark-x",
+            `${x}px`
+        );
+
+
+        spark.style.setProperty(
+            "--spark-y",
+            `${y}px`
+        );
+
+
+        spark.style.setProperty(
+            "--spark-size",
+            `${size}px`
+        );
+
+
+        spark.style.setProperty(
+            "--spark-life",
+            `${life}ms`
+        );
+
+
+        spark.style.setProperty(
+            "--spark-dx",
+            `${driftX}px`
+        );
+
+
+        spark.style.setProperty(
+            "--spark-dy",
+            `${driftY}px`
+        );
+
+
+        sparkleContainer.appendChild(
+            spark
+        );
+
+
+        setTimeout(
+            () => {
+
+                spark.remove();
+
+            },
+            life + 50
+        );
+
+    }
+
+
+    /* =========================================
+       HOVER ELEMENTS
+    ========================================= */
+
+    const hoverElements =
+        document.querySelectorAll(
+            "a, button, .service-card, .nav-link, .btn"
+        );
+
+
+    hoverElements.forEach(
+        element => {
+
+            element.addEventListener(
+                "mouseenter",
+                () => {
+
+                    cursor.classList.add(
+                        "cursor-hover"
+                    );
+
+                }
+            );
+
+
+            element.addEventListener(
+                "mouseleave",
+                () => {
+
+                    cursor.classList.remove(
+                        "cursor-hover"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =========================================
+       CLICK BURST
+    ========================================= */
+
+    document.addEventListener(
+        "click",
+        (event) => {
+
+            createClickBurst(
+                event.clientX,
+                event.clientY
+            );
+
+        }
+    );
+
+
+    function createClickBurst(
+        x,
+        y
+    ) {
+
+        const particleCount = 12;
+
+
+        for (
+            let i = 0;
+            i < particleCount;
+            i++
+        ) {
+
+            const burst =
+                document.createElement("span");
+
+
+            burst.className =
+                "cursor-burst";
+
+
+            const angle =
+                (
+                    Math.PI * 2 /
+                    particleCount
+                ) * i;
+
+
+            const distance =
+                20 +
+                Math.random() * 28;
+
+
+            const burstX =
+                Math.cos(angle) *
+                distance;
+
+
+            const burstY =
+                Math.sin(angle) *
+                distance;
+
+
+            burst.style.left =
+                `${x}px`;
+
+
+            burst.style.top =
+                `${y}px`;
+
+
+            burst.style.setProperty(
+                "--burst-x",
+                `${burstX}px`
+            );
+
+
+            burst.style.setProperty(
+                "--burst-y",
+                `${burstY}px`
+            );
+
+
+            sparkleContainer.appendChild(
+                burst
+            );
+
+
+            setTimeout(
+                () => {
+
+                    burst.remove();
+
+                },
+                700
+            );
+
+        }
+
+    }
+
+})();
