@@ -2675,3 +2675,141 @@ footer {
         font-size: 12px;
     }
 }
+/* =========================================================
+   GALLERY VIDEO
+========================================================= */
+
+#galleryMainVideo {
+
+    display: none;
+
+    width: 100%;
+    height: 100%;
+
+    max-height: 65vh;
+
+    object-fit: contain;
+
+    background: #000;
+
+    border-radius: 18px;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
+}
+
+
+/* VIDEO ANIMATION */
+
+#galleryMainVideo.gallery-enter {
+
+    opacity: 1;
+
+    animation: galleryVideoEnter 0.55s ease both;
+
+}
+
+
+@keyframes galleryVideoEnter {
+
+    from {
+
+        opacity: 0;
+
+        transform: scale(0.96);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: scale(1);
+
+    }
+
+}
+
+
+/* =========================================
+   VIDEO THUMBNAIL
+========================================= */
+
+.video-thumbnail {
+
+    width: 100%;
+    height: 100%;
+
+    min-height: 70px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #111,
+            #292929
+        );
+
+    color: white;
+
+}
+
+
+/* PLAY ICON */
+
+.video-thumbnail i {
+
+    width: 32px;
+    height: 32px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: var(--gold-light);
+
+    color: #111;
+
+    font-size: 11px;
+
+}
+
+
+/* VIDEO TEXT */
+
+.video-thumbnail span {
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+}
+
+
+/* ACTIVE VIDEO */
+
+.gallery-thumb.active .video-thumbnail {
+
+    box-shadow:
+        0 0 0 2px var(--gold-light),
+        0 8px 25px rgba(0,0,0,0.2);
+
+}
