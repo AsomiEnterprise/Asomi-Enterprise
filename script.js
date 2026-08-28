@@ -1266,3 +1266,140 @@ window.renderGalleryWithAnimation =
     }
 
 })();
+/* =========================================================
+   ASOMI ENTERPRISE
+   PREMIUM OPENING ANIMATION
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const intro =
+        document.getElementById("asomi-intro");
+
+    const particleContainer =
+        document.getElementById("asomiParticles");
+
+
+    /* =========================================
+       CREATE GOLD PARTICLES
+    ========================================= */
+
+    if (particleContainer) {
+
+        const particleCount =
+            window.innerWidth <= 768 ? 35 : 80;
+
+        for (
+            let i = 0;
+            i < particleCount;
+            i++
+        ) {
+
+            const particle =
+                document.createElement("span");
+
+            particle.className =
+                "asomi-particle";
+
+
+            /* RANDOM POSITION */
+
+            particle.style.left =
+                `${Math.random() * 100}%`;
+
+            particle.style.top =
+                `${Math.random() * 100}%`;
+
+
+            /* RANDOM SIZE */
+
+            const size =
+                Math.random() * 3 + 1;
+
+            particle.style.width =
+                `${size}px`;
+
+            particle.style.height =
+                `${size}px`;
+
+
+            /* RANDOM MOVEMENT */
+
+            particle.style.setProperty(
+                "--particle-x",
+                `${(Math.random() - .5) * 350}px`
+            );
+
+
+            /* RANDOM SPEED */
+
+            particle.style.setProperty(
+                "--particle-time",
+                `${4 + Math.random() * 6}s`
+            );
+
+
+            /* RANDOM DELAY */
+
+            particle.style.animationDelay =
+                `${Math.random() * 5}s`;
+
+
+            particleContainer.appendChild(
+                particle
+            );
+
+        }
+
+    }
+
+
+    /* =========================================
+       LOCK PAGE WHILE INTRO PLAYS
+    ========================================= */
+
+    document.body.style.overflow =
+        "hidden";
+
+
+    /* =========================================
+       FINISH INTRO
+    ========================================= */
+
+    setTimeout(() => {
+
+        if (!intro) return;
+
+        intro.classList.add(
+            "asomi-intro-hide"
+        );
+
+        document.body.style.overflow =
+            "";
+
+    }, 7000);
+
+
+    /* =========================================
+       OPTIONAL CLICK TO SKIP
+    ========================================= */
+
+    if (intro) {
+
+        intro.addEventListener(
+            "click",
+            () => {
+
+                intro.classList.add(
+                    "asomi-intro-hide"
+                );
+
+                document.body.style.overflow =
+                    "";
+
+            }
+        );
+
+    }
+
+});
