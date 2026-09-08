@@ -1,74 +1,98 @@
 /* =========================================================
    ASOMI ENTERPRISE
-   WEBSITE JAVASCRIPT
+   COMPLETE WEBSITE JAVASCRIPT
 ========================================================= */
 
 
 /* =========================================================
-   MOBILE NAVIGATION
+   1. MOBILE NAVIGATION
 ========================================================= */
 
 const menuButton = document.getElementById("menuButton");
 const nav = document.getElementById("nav");
 
-menuButton.addEventListener("click", () => {
+if (menuButton && nav) {
 
-    nav.classList.toggle("open");
+    menuButton.addEventListener("click", () => {
 
-    const icon = menuButton.querySelector("i");
-
-    if (nav.classList.contains("open")) {
-        icon.classList.remove("fa-bars");
-        icon.classList.add("fa-xmark");
-    } else {
-        icon.classList.remove("fa-xmark");
-        icon.classList.add("fa-bars");
-    }
-
-});
-
-
-/* CLOSE MOBILE MENU AFTER CLICK */
-
-document.querySelectorAll(".nav-link").forEach(link => {
-
-    link.addEventListener("click", () => {
-
-        nav.classList.remove("open");
+        nav.classList.toggle("open");
 
         const icon = menuButton.querySelector("i");
 
-        icon.classList.remove("fa-xmark");
-        icon.classList.add("fa-bars");
+        if (!icon) return;
+
+        if (nav.classList.contains("open")) {
+
+            icon.classList.remove("fa-bars");
+            icon.classList.add("fa-xmark");
+
+        } else {
+
+            icon.classList.remove("fa-xmark");
+            icon.classList.add("fa-bars");
+
+        }
 
     });
 
-});
+
+    /* CLOSE MOBILE MENU AFTER CLICK */
+
+    document.querySelectorAll(".nav-link").forEach(link => {
+
+        link.addEventListener("click", () => {
+
+            nav.classList.remove("open");
+
+            const icon = menuButton.querySelector("i");
+
+            if (!icon) return;
+
+            icon.classList.remove("fa-xmark");
+            icon.classList.add("fa-bars");
+
+        });
+
+    });
+
+}
 
 
 /* =========================================================
-   HEADER SCROLL EFFECT
+   2. HEADER SCROLL EFFECT
 ========================================================= */
 
 const header = document.getElementById("header");
 
-window.addEventListener("scroll", () => {
+if (header) {
 
-    if (window.scrollY > 30) {
-        header.classList.add("scrolled");
-    } else {
-        header.classList.remove("scrolled");
-    }
+    window.addEventListener("scroll", () => {
 
-});
+        if (window.scrollY > 30) {
+
+            header.classList.add("scrolled");
+
+        } else {
+
+            header.classList.remove("scrolled");
+
+        }
+
+    });
+
+}
 
 
 /* =========================================================
-   ACTIVE NAVIGATION
+   3. ACTIVE NAVIGATION
 ========================================================= */
 
-const sections = document.querySelectorAll("section[id]");
-const navLinks = document.querySelectorAll(".nav-link");
+const sections =
+    document.querySelectorAll("section[id]");
+
+const navLinks =
+    document.querySelectorAll(".nav-link");
+
 
 window.addEventListener("scroll", () => {
 
@@ -76,26 +100,36 @@ window.addEventListener("scroll", () => {
 
     sections.forEach(section => {
 
-        const sectionTop = section.offsetTop - 150;
-        const sectionHeight = section.offsetHeight;
+        const sectionTop =
+            section.offsetTop - 150;
+
+        const sectionHeight =
+            section.offsetHeight;
 
         if (
             window.scrollY >= sectionTop &&
             window.scrollY < sectionTop + sectionHeight
         ) {
-            currentSection = section.getAttribute("id");
+
+            currentSection =
+                section.getAttribute("id");
+
         }
 
     });
+
 
     navLinks.forEach(link => {
 
         link.classList.remove("active");
 
         if (
-            link.getAttribute("href") === `#${currentSection}`
+            link.getAttribute("href") ===
+            `#${currentSection}`
         ) {
+
             link.classList.add("active");
+
         }
 
     });
@@ -104,31 +138,28 @@ window.addEventListener("scroll", () => {
 
 
 /* =========================================================
-   SERVICE GALLERY DATA
-=========================================================
-
-   IMPORTANT:
-   Replace these image URLs with your own photos later.
-
+   4. SERVICE GALLERY DATA
 ========================================================= */
 
 const galleryData = {
 
     "Digital Printing": [
-    "images/digital-1.jpg",
-    "images/digital-2.jpg",
-    "images/digital-3.jpg",
-    "images/digital-4.jpg",
-    "images/digital-5.jpg",
-    "images/digital-6.jpg"
-],
+        "images/digital-1.jpg",
+        "images/digital-2.jpg",
+        "images/digital-3.jpg",
+        "images/digital-4.jpg",
+        "images/digital-5.jpg",
+        "images/digital-6.jpg"
+    ],
+
 
     "Flex & Banner Printing": [
-     "images/flex-1.jpg",
-     "images/flex-2.jpg",
-     "images/flex-3.jpg",
-     "images/flex-4.jpg"
+        "images/flex-1.jpg",
+        "images/flex-2.jpg",
+        "images/flex-3.jpg",
+        "images/flex-4.jpg"
     ],
+
 
     "Visiting Cards": [
         "images/visiting-card-1.jpg",
@@ -137,12 +168,14 @@ const galleryData = {
         "images/visiting-card-4.jpg"
     ],
 
+
     "Pamphlets & Flyers": [
         "images/pamphlet-1.jpg",
         "images/pamphlet-2.jpg",
         "images/pamphlet-3.jpg",
         "images/pamphlet-4.jpg"
     ],
+
 
     "Brochures": [
         "images/brochure-1.jpg",
@@ -151,12 +184,14 @@ const galleryData = {
         "images/brochure-4.jpg"
     ],
 
+
     "Letterheads": [
         "images/letterhead-1.jpg",
         "images/letterhead-2.jpg",
         "images/letterhead-3.jpg",
         "images/letterhead-4.jpg"
     ],
+
 
     "Bill Books": [
         "images/bill-book-1.jpg",
@@ -165,12 +200,14 @@ const galleryData = {
         "images/bill-book-4.jpg"
     ],
 
+
     "ID Cards": [
         "images/id-card-1.jpg",
         "images/id-card-2.jpg",
         "images/id-card-3.jpg",
         "images/id-card-4.jpg"
     ],
+
 
     "Certificates": [
         "images/certificate-1.jpg",
@@ -179,28 +216,36 @@ const galleryData = {
         "images/certificate-4.jpg"
     ],
 
+
     "Stickers & Labels": [
+
         {
             type: "image",
             src: "images/sticker-1.jpg"
         },
+
         {
-         type: "image",
+            type: "image",
             src: "images/sticker-2.jpg"
         },
+
         {
             type: "image",
             src: "images/sticker-3.jpg"
         },
+
         {
             type: "image",
             src: "images/sticker-4.jpg"
         },
+
         {
             type: "video",
             src: "images/videos/sticker-5.mp4"
         }
+
     ],
+
 
     "Photo Printing": [
         "images/photo-1.jpg",
@@ -209,12 +254,14 @@ const galleryData = {
         "images/photo-4.jpg"
     ],
 
+
     "Custom Printing Services": [
         "images/custom-1.jpg",
         "images/custom-2.jpg",
         "images/custom-3.jpg",
         "images/custom-4.jpg"
     ],
+
 
     "Book Printing": [
         "images/book-1.jpg",
@@ -227,21 +274,38 @@ const galleryData = {
 
 
 /* =========================================================
-   GALLERY ELEMENTS
+   5. GALLERY ELEMENTS
 ========================================================= */
 
-const galleryModal = document.getElementById("galleryModal");
-const galleryClose = document.getElementById("galleryClose");
-const galleryOverlay = document.getElementById("galleryOverlay");
+const galleryModal =
+    document.getElementById("galleryModal");
 
-const galleryTitle = document.getElementById("galleryTitle");
-const galleryCounter = document.getElementById("galleryCounter");
+const galleryClose =
+    document.getElementById("galleryClose");
 
-const galleryMainImage = document.getElementById("galleryMainImage");
-const galleryThumbnails = document.getElementById("galleryThumbnails");
+const galleryOverlay =
+    document.getElementById("galleryOverlay");
 
-const galleryPrev = document.getElementById("galleryPrev");
-const galleryNext = document.getElementById("galleryNext");
+const galleryTitle =
+    document.getElementById("galleryTitle");
+
+const galleryCounter =
+    document.getElementById("galleryCounter");
+
+const galleryMainImage =
+    document.getElementById("galleryMainImage");
+
+const galleryMainVideo =
+    document.getElementById("galleryMainVideo");
+
+const galleryThumbnails =
+    document.getElementById("galleryThumbnails");
+
+const galleryPrev =
+    document.getElementById("galleryPrev");
+
+const galleryNext =
+    document.getElementById("galleryNext");
 
 
 let currentGallery = [];
@@ -249,14 +313,15 @@ let currentIndex = 0;
 
 
 /* =========================================================
-   OPEN GALLERY
+   6. OPEN GALLERY
 ========================================================= */
 
 document.querySelectorAll(".service-card").forEach(card => {
 
     card.addEventListener("click", () => {
 
-        const serviceName = card.dataset.service;
+        const serviceName =
+            card.dataset.service;
 
         openGallery(serviceName);
 
@@ -267,23 +332,39 @@ document.querySelectorAll(".service-card").forEach(card => {
 
 function openGallery(serviceName) {
 
-    currentGallery = galleryData[serviceName] || [];
+    currentGallery =
+        galleryData[serviceName] || [];
 
     currentIndex = 0;
 
-    galleryTitle.textContent = serviceName;
+
+    if (galleryTitle) {
+
+        galleryTitle.textContent =
+            serviceName;
+
+    }
+
 
     renderGallery();
 
-    galleryModal.classList.add("active");
 
-    document.body.classList.add("modal-open");
+    if (galleryModal) {
+
+        galleryModal.classList.add("active");
+
+    }
+
+
+    document.body.classList.add(
+        "modal-open"
+    );
 
 }
 
 
 /* =========================================================
-   RENDER GALLERY
+   7. RENDER GALLERY
 ========================================================= */
 
 function renderGallery() {
@@ -292,20 +373,10 @@ function renderGallery() {
         return;
     }
 
-    /* =========================================
-       SUPPORT BOTH FORMATS
 
-       OLD:
-       "images/photo-1.jpg"
+    const rawItem =
+        currentGallery[currentIndex];
 
-       NEW:
-       {
-           type: "image",
-           src: "images/photo-1.jpg"
-       }
-    ========================================= */
-
-    const rawItem = currentGallery[currentIndex];
 
     const item =
         typeof rawItem === "string"
@@ -316,95 +387,98 @@ function renderGallery() {
             : rawItem;
 
 
-    const galleryImage =
-        document.getElementById("galleryMainImage");
-
-    const galleryVideo =
-        document.getElementById("galleryMainVideo");
-
-
-    /* SAFETY */
-
-    if (!galleryImage || !galleryVideo) {
+    if (!galleryMainImage ||
+        !galleryMainVideo) {
 
         console.error(
-            "Gallery image/video element missing."
+            "Gallery media elements missing."
         );
 
         return;
+
     }
 
 
-    /* =========================================
-       HIDE BOTH MEDIA
-    ========================================= */
+    /* HIDE BOTH */
 
-    galleryImage.style.display = "none";
+    galleryMainImage.style.display =
+        "none";
 
-    galleryVideo.style.display = "none";
-
-    galleryVideo.pause();
-
-    galleryVideo.removeAttribute("src");
-
-    galleryVideo.load();
+    galleryMainVideo.style.display =
+        "none";
 
 
-    /* =========================================
+    galleryMainVideo.pause();
+
+    galleryMainVideo.removeAttribute(
+        "src"
+    );
+
+    galleryMainVideo.load();
+
+
+    /* =====================================================
        IMAGE
-    ========================================= */
+    ===================================================== */
 
     if (item.type === "image") {
 
-        galleryImage.style.display = "block";
+        galleryMainImage.style.display =
+            "block";
 
-        galleryImage.classList.remove(
+        galleryMainImage.classList.remove(
             "gallery-enter"
         );
 
-        galleryImage.style.opacity = "0";
+        galleryMainImage.style.opacity =
+            "0";
 
 
         setTimeout(() => {
 
-            galleryImage.src = item.src;
+            galleryMainImage.src =
+                item.src;
 
-            galleryImage.style.opacity = "1";
+            galleryMainImage.style.opacity =
+                "1";
 
-            void galleryImage.offsetWidth;
+            void galleryMainImage.offsetWidth;
 
-            galleryImage.classList.add(
+            galleryMainImage.classList.add(
                 "gallery-enter"
             );
 
-        }, 180);
+        }, 120);
 
     }
 
 
-    /* =========================================
+    /* =====================================================
        VIDEO
-    ========================================= */
+    ===================================================== */
 
     else if (item.type === "video") {
 
-        galleryVideo.style.display = "block";
+        galleryMainVideo.style.display =
+            "block";
 
-        galleryVideo.src = item.src;
+        galleryMainVideo.src =
+            item.src;
 
-        galleryVideo.load();
+        galleryMainVideo.load();
 
-        galleryVideo.classList.remove(
+        galleryMainVideo.classList.remove(
             "gallery-enter"
         );
 
-        void galleryVideo.offsetWidth;
+        void galleryMainVideo.offsetWidth;
 
-        galleryVideo.classList.add(
+        galleryMainVideo.classList.add(
             "gallery-enter"
         );
 
-        galleryVideo.play().catch(() => {
+
+        galleryMainVideo.play().catch(() => {
 
             console.log(
                 "Video requires user interaction."
@@ -415,17 +489,26 @@ function renderGallery() {
     }
 
 
-    /* =========================================
+    /* =====================================================
        COUNTER
-    ========================================= */
+    ===================================================== */
 
-    galleryCounter.textContent =
-        `${String(currentIndex + 1).padStart(2, "0")} / ${String(currentGallery.length).padStart(2, "0")}`;
+    if (galleryCounter) {
+
+        galleryCounter.textContent =
+            `${String(currentIndex + 1).padStart(2, "0")} / ${String(currentGallery.length).padStart(2, "0")}`;
+
+    }
 
 
-    /* =========================================
+    /* =====================================================
        THUMBNAILS
-    ========================================= */
+    ===================================================== */
+
+    if (!galleryThumbnails) {
+        return;
+    }
+
 
     galleryThumbnails.innerHTML = "";
 
@@ -450,11 +533,12 @@ function renderGallery() {
             }
 
 
-            /* =================================
-               OLD IMAGE FORMAT
-            ================================= */
+            /* IMAGE STRING */
 
-            if (typeof galleryItem === "string") {
+            if (
+                typeof galleryItem ===
+                "string"
+            ) {
 
                 thumbnail.innerHTML = `
                     <img
@@ -467,12 +551,11 @@ function renderGallery() {
             }
 
 
-            /* =================================
-               NEW IMAGE FORMAT
-            ================================= */
+            /* IMAGE OBJECT */
 
             else if (
-                galleryItem.type === "image"
+                galleryItem.type ===
+                "image"
             ) {
 
                 thumbnail.innerHTML = `
@@ -486,12 +569,11 @@ function renderGallery() {
             }
 
 
-            /* =================================
-               VIDEO FORMAT
-            ================================= */
+            /* VIDEO */
 
             else if (
-                galleryItem.type === "video"
+                galleryItem.type ===
+                "video"
             ) {
 
                 thumbnail.innerHTML = `
@@ -504,15 +586,14 @@ function renderGallery() {
             }
 
 
-            /* =================================
-               THUMBNAIL CLICK
-            ================================= */
+            /* THUMBNAIL CLICK */
 
             thumbnail.addEventListener(
                 "click",
                 () => {
 
-                    currentIndex = index;
+                    currentIndex =
+                        index;
 
                     renderGallery();
 
@@ -529,19 +610,30 @@ function renderGallery() {
 
 }
 
+
 /* =========================================================
-   NEXT IMAGE
+   8. NEXT IMAGE
 ========================================================= */
 
 function nextImage() {
 
-    if (!currentGallery.length) return;
+    if (!currentGallery.length) {
+        return;
+    }
+
 
     currentIndex++;
 
-    if (currentIndex >= currentGallery.length) {
+
+    if (
+        currentIndex >=
+        currentGallery.length
+    ) {
+
         currentIndex = 0;
+
     }
+
 
     renderGallery();
 
@@ -549,217 +641,347 @@ function nextImage() {
 
 
 /* =========================================================
-   PREVIOUS IMAGE
+   9. PREVIOUS IMAGE
 ========================================================= */
 
 function previousImage() {
 
-    if (!currentGallery.length) return;
+    if (!currentGallery.length) {
+        return;
+    }
+
 
     currentIndex--;
 
+
     if (currentIndex < 0) {
-        currentIndex = currentGallery.length - 1;
+
+        currentIndex =
+            currentGallery.length - 1;
+
     }
+
 
     renderGallery();
 
 }
 
 
-galleryNext.addEventListener("click", nextImage);
-galleryPrev.addEventListener("click", previousImage);
-
-
 /* =========================================================
-   CLOSE GALLERY
+   10. GALLERY BUTTONS
 ========================================================= */
 
-function closeGallery() {
+if (galleryNext) {
 
-    galleryModal.classList.remove("active");
-
-    document.body.classList.remove("modal-open");
+    galleryNext.addEventListener(
+        "click",
+        nextImage
+    );
 
 }
 
 
-galleryClose.addEventListener("click", closeGallery);
-galleryOverlay.addEventListener("click", closeGallery);
+if (galleryPrev) {
+
+    galleryPrev.addEventListener(
+        "click",
+        previousImage
+    );
+
+}
 
 
 /* =========================================================
-   KEYBOARD CONTROLS
+   11. CLOSE GALLERY
 ========================================================= */
 
-document.addEventListener("keydown", event => {
+function closeGallery() {
 
-    if (!galleryModal.classList.contains("active")) {
-        return;
+    if (galleryModal) {
+
+        galleryModal.classList.remove(
+            "active"
+        );
+
     }
 
-    if (event.key === "Escape") {
-        closeGallery();
+
+    document.body.classList.remove(
+        "modal-open"
+    );
+
+
+    if (galleryMainVideo) {
+
+        galleryMainVideo.pause();
+
     }
 
-    if (event.key === "ArrowRight") {
-        nextImage();
-    }
+}
 
-    if (event.key === "ArrowLeft") {
-        previousImage();
-    }
 
-});
+if (galleryClose) {
+
+    galleryClose.addEventListener(
+        "click",
+        closeGallery
+    );
+
+}
+
+
+if (galleryOverlay) {
+
+    galleryOverlay.addEventListener(
+        "click",
+        closeGallery
+    );
+
+}
 
 
 /* =========================================================
-   TOUCH / SWIPE SUPPORT
+   12. KEYBOARD CONTROLS
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            !galleryModal ||
+            !galleryModal.classList.contains(
+                "active"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        if (event.key === "Escape") {
+
+            closeGallery();
+
+        }
+
+
+        if (event.key === "ArrowRight") {
+
+            nextImage();
+
+        }
+
+
+        if (event.key === "ArrowLeft") {
+
+            previousImage();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   13. TOUCH / SWIPE
 ========================================================= */
 
 let touchStartX = 0;
 let touchEndX = 0;
 
 
-galleryMainImage.addEventListener("touchstart", event => {
+if (galleryMainImage) {
 
-    touchStartX = event.changedTouches[0].screenX;
+    galleryMainImage.addEventListener(
+        "touchstart",
+        event => {
 
-});
+            touchStartX =
+                event.changedTouches[0]
+                    .screenX;
+
+        }
+    );
 
 
-galleryMainImage.addEventListener("touchend", event => {
+    galleryMainImage.addEventListener(
+        "touchend",
+        event => {
 
-    touchEndX = event.changedTouches[0].screenX;
+            touchEndX =
+                event.changedTouches[0]
+                    .screenX;
 
-    handleSwipe();
+            handleSwipe();
 
-});
+        }
+    );
+
+}
 
 
 function handleSwipe() {
 
-    const distance = touchEndX - touchStartX;
+    const distance =
+        touchEndX - touchStartX;
+
 
     if (Math.abs(distance) < 50) {
         return;
     }
 
+
     if (distance < 0) {
+
         nextImage();
+
     } else {
+
         previousImage();
+
     }
 
 }
 
 
 /* =========================================================
-   SCROLL REVEAL
+   14. SCROLL REVEAL
 ========================================================= */
 
-const revealElements = document.querySelectorAll(
-    ".service-card, .why-card, .contact-card, .about-content, .about-image"
-);
+const revealElements =
+    document.querySelectorAll(
+        ".service-card, .why-card, .contact-card, .about-content, .about-image"
+    );
 
 
-const revealObserver = new IntersectionObserver(
-    entries => {
+if ("IntersectionObserver" in window) {
 
-        entries.forEach(entry => {
+    const revealObserver =
+        new IntersectionObserver(
+            entries => {
 
-            if (entry.isIntersecting) {
+                entries.forEach(entry => {
 
-                entry.target.style.opacity = "1";
-                entry.target.style.transform = "translateY(0)";
+                    if (
+                        entry.isIntersecting
+                    ) {
 
-                revealObserver.unobserve(entry.target);
+                        entry.target.style.opacity =
+                            "1";
 
+                        entry.target.style.transform =
+                            "translateY(0)";
+
+
+                        revealObserver.unobserve(
+                            entry.target
+                        );
+
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.08
             }
+        );
 
-        });
 
-    },
-    {
-        threshold: 0.08
+    revealElements.forEach(element => {
+
+        element.style.opacity = "0";
+
+        element.style.transform =
+            "translateY(25px)";
+
+        element.style.transition =
+            "opacity 0.7s ease, transform 0.7s ease";
+
+
+        revealObserver.observe(
+            element
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   15. BROKEN IMAGE PROTECTION
+========================================================= */
+
+if (galleryMainImage) {
+
+    galleryMainImage.addEventListener(
+        "error",
+        () => {
+
+            galleryMainImage.alt =
+                "Gallery image unavailable";
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   16. MOUSE FOLLOW BACKGROUND
+========================================================= */
+
+const root =
+    document.documentElement;
+
+
+let mouseTargetX =
+    window.innerWidth / 2;
+
+let mouseTargetY =
+    window.innerHeight / 2;
+
+
+let mouseCurrentX =
+    mouseTargetX;
+
+let mouseCurrentY =
+    mouseTargetY;
+
+
+document.addEventListener(
+    "mousemove",
+    event => {
+
+        mouseTargetX =
+            event.clientX;
+
+        mouseTargetY =
+            event.clientY;
+
     }
 );
-
-
-revealElements.forEach(element => {
-
-    element.style.opacity = "0";
-    element.style.transform = "translateY(25px)";
-    element.style.transition = "opacity 0.7s ease, transform 0.7s ease";
-
-    revealObserver.observe(element);
-
-});
-
-
-/* =========================================================
-   PREVENT BROKEN IMAGE DISPLAY
-========================================================= */
-
-galleryMainImage.addEventListener("error", () => {
-
-    galleryMainImage.alt = "Gallery image unavailable";
-
-});
-
-
-/* =========================================================
-   CONSOLE MESSAGE
-========================================================= */
-
-console.log(
-    "%cASOMI ENTERPRISE",
-    "font-size:24px;font-weight:bold;"
-);
-
-console.log(
-    "Premium Printing Services • Guwahati"
-);
-/* =========================================================
-   ASOMI ENTERPRISE
-   PREMIUM MOUSE + SPACE + GALLERY ANIMATIONS
-========================================================= */
-
-
-/* =========================================================
-   1. MOUSE FOLLOW BACKGROUND
-========================================================= */
-
-const root = document.documentElement;
-
-let mouseTargetX = window.innerWidth / 2;
-let mouseTargetY = window.innerHeight / 2;
-
-let mouseCurrentX = mouseTargetX;
-let mouseCurrentY = mouseTargetY;
-
-
-document.addEventListener("mousemove", (event) => {
-
-    mouseTargetX = event.clientX;
-    mouseTargetY = event.clientY;
-
-});
 
 
 function animateMouseBackground() {
 
     mouseCurrentX +=
-        (mouseTargetX - mouseCurrentX) * 0.08;
+        (mouseTargetX - mouseCurrentX) *
+        0.08;
+
 
     mouseCurrentY +=
-        (mouseTargetY - mouseCurrentY) * 0.08;
+        (mouseTargetY - mouseCurrentY) *
+        0.08;
 
 
     root.style.setProperty(
         "--mouse-x",
         `${mouseCurrentX}px`
     );
+
 
     root.style.setProperty(
         "--mouse-y",
@@ -770,28 +992,36 @@ function animateMouseBackground() {
     requestAnimationFrame(
         animateMouseBackground
     );
+
 }
 
 
 animateMouseBackground();
 
 
-
 /* =========================================================
-   2. SPACE PARTICLES
+   17. SPACE PARTICLES
 ========================================================= */
 
 const particleContainer =
-    document.querySelector(".space-particles");
+    document.querySelector(
+        ".space-particles"
+    );
 
 
 if (particleContainer) {
 
     const particleCount =
-        window.innerWidth <= 768 ? 18 : 35;
+        window.innerWidth <= 768
+            ? 18
+            : 35;
 
 
-    for (let i = 0; i < particleCount; i++) {
+    for (
+        let i = 0;
+        i < particleCount;
+        i++
+    ) {
 
         const particle =
             document.createElement("span");
@@ -804,6 +1034,7 @@ if (particleContainer) {
         particle.style.left =
             `${Math.random() * 100}%`;
 
+
         particle.style.top =
             `${Math.random() * 100}%`;
 
@@ -812,6 +1043,7 @@ if (particleContainer) {
             "--particle-x",
             `${(Math.random() - 0.5) * 100}px`
         );
+
 
         particle.style.setProperty(
             "--particle-y",
@@ -838,13 +1070,14 @@ if (particleContainer) {
         particleContainer.appendChild(
             particle
         );
+
     }
+
 }
 
 
-
 /* =========================================================
-   3. GALLERY IMAGE ANIMATION
+   18. GALLERY IMAGE ANIMATION
 ========================================================= */
 
 function animateGalleryImage() {
@@ -859,62 +1092,242 @@ function animateGalleryImage() {
     );
 
 
-    /*
-       Force browser reflow so the animation
-       can restart every time the image changes.
-    */
     void galleryMainImage.offsetWidth;
 
 
     galleryMainImage.classList.add(
         "gallery-enter"
     );
+
 }
 
-
-/* =========================================================
-   UPDATE YOUR EXISTING renderGallery()
-========================================================= */
-
-const originalRenderGallery =
-    renderGallery;
-
-
-/*
-   We don't replace the gallery system.
-   We simply add animation after rendering.
-*/
 
 window.renderGalleryWithAnimation =
     function () {
 
-        originalRenderGallery();
+        renderGallery();
 
-        setTimeout(() => {
 
-            animateGalleryImage();
+        setTimeout(
+            () => {
 
-        }, 120);
+                animateGalleryImage();
 
-};
+            },
+            120
+        );
+
+    };
+
+
 /* =========================================================
-   ASOMI ENTERPRISE
-   SPARKLE / PARTICLE CURSOR
+   19. PREMIUM HERO 3D TILT
+========================================================= */
+
+const heroVisual =
+    document.querySelector(
+        ".hero-visual"
+    );
+
+const heroCard =
+    document.querySelector(
+        ".hero-card"
+    );
+
+
+if (
+    heroVisual &&
+    heroCard &&
+    window.matchMedia(
+        "(min-width: 769px)"
+    ).matches
+) {
+
+    let heroTargetX = 0;
+    let heroTargetY = 0;
+
+    let heroCurrentX = 0;
+    let heroCurrentY = 0;
+
+
+    heroVisual.addEventListener(
+        "mousemove",
+        event => {
+
+            const rect =
+                heroVisual.getBoundingClientRect();
+
+
+            const x =
+                (
+                    event.clientX -
+                    rect.left
+                ) /
+                rect.width;
+
+
+            const y =
+                (
+                    event.clientY -
+                    rect.top
+                ) /
+                rect.height;
+
+
+            heroTargetX =
+                (x - 0.5) * 10;
+
+
+            heroTargetY =
+                (y - 0.5) * -10;
+
+        }
+    );
+
+
+    heroVisual.addEventListener(
+        "mouseleave",
+        () => {
+
+            heroTargetX = 0;
+            heroTargetY = 0;
+
+        }
+    );
+
+
+    function animateHeroCard() {
+
+        heroCurrentX +=
+            (
+                heroTargetX -
+                heroCurrentX
+            ) * 0.08;
+
+
+        heroCurrentY +=
+            (
+                heroTargetY -
+                heroCurrentY
+            ) * 0.08;
+
+
+        heroCard.style.setProperty(
+            "--hero-rotate-x",
+            `${heroCurrentY}deg`
+        );
+
+
+        heroCard.style.setProperty(
+            "--hero-rotate-y",
+            `${heroCurrentX}deg`
+        );
+
+
+        heroCard.style.transform =
+            `
+            rotateX(${heroCurrentY}deg)
+            rotateY(${heroCurrentX}deg)
+            rotate(2deg)
+            translateY(-4px)
+            `;
+
+
+        requestAnimationFrame(
+            animateHeroCard
+        );
+
+    }
+
+
+    animateHeroCard();
+
+}
+
+
+/* =========================================================
+   20. HERO FLOATING CARDS
+========================================================= */
+
+const floatingCards =
+    document.querySelectorAll(
+        ".floating-card"
+    );
+
+
+floatingCards.forEach(
+    (card, index) => {
+
+        card.style.animationDelay =
+            `${index * -1.8}s`;
+
+    }
+);
+
+
+/* =========================================================
+   21. HERO CARD MOUSE GLOW
+========================================================= */
+
+if (heroVisual && heroCard) {
+
+    heroVisual.addEventListener(
+        "mousemove",
+        event => {
+
+            const rect =
+                heroCard.getBoundingClientRect();
+
+
+            const x =
+                event.clientX -
+                rect.left;
+
+
+            const y =
+                event.clientY -
+                rect.top;
+
+
+            heroCard.style.setProperty(
+                "--hero-glow-x",
+                `${x}px`
+            );
+
+
+            heroCard.style.setProperty(
+                "--hero-glow-y",
+                `${y}px`
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   22. CURSOR SPARKLE
 ========================================================= */
 
 (() => {
 
-    /* =========================================
-       DESKTOP ONLY
-    ========================================= */
+    if (
+        window.matchMedia(
+            "(max-width: 768px)"
+        ).matches
+    ) {
 
-    if (window.innerWidth <= 768) {
         return;
+
     }
 
 
     const cursor =
-        document.getElementById("customCursor");
+        document.getElementById(
+            "customCursor"
+        );
+
 
     const sparkleContainer =
         document.getElementById(
@@ -922,67 +1335,79 @@ window.renderGalleryWithAnimation =
         );
 
 
-    if (!cursor || !sparkleContainer) {
+    if (
+        !cursor ||
+        !sparkleContainer
+    ) {
+
         return;
+
     }
 
 
-    /* =========================================
-       MOUSE POSITION
-    ========================================= */
+    let mouseX =
+        window.innerWidth / 2;
 
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-
-    let currentX = mouseX;
-    let currentY = mouseY;
+    let mouseY =
+        window.innerHeight / 2;
 
 
-    let lastSparkX = mouseX;
-    let lastSparkY = mouseY;
+    let currentX =
+        mouseX;
+
+    let currentY =
+        mouseY;
 
 
-    let mouseMoving = false;
+    let lastSparkX =
+        mouseX;
+
+    let lastSparkY =
+        mouseY;
 
 
-    /* =========================================
-       MOUSE MOVE
-    ========================================= */
+    let mouseMoving =
+        false;
+
 
     document.addEventListener(
         "mousemove",
-        (event) => {
+        event => {
 
-            mouseX = event.clientX;
-            mouseY = event.clientY;
+            mouseX =
+                event.clientX;
 
-            mouseMoving = true;
+            mouseY =
+                event.clientY;
+
+            mouseMoving =
+                true;
 
         }
     );
 
 
-    /* =========================================
-       SMOOTH CURSOR
-    ========================================= */
-
     function animateCursor() {
 
         currentX +=
-            (mouseX - currentX) * 0.22;
+            (mouseX - currentX) *
+            0.22;
+
 
         currentY +=
-            (mouseY - currentY) * 0.22;
+            (mouseY - currentY) *
+            0.22;
 
-        /* =====================================
-           CREATE SPARKLE
-        ===================================== */
 
         const dx =
-            currentX - lastSparkX;
+            currentX -
+            lastSparkX;
+
 
         const dy =
-            currentY - lastSparkY;
+            currentY -
+            lastSparkY;
+
 
         const distance =
             Math.sqrt(
@@ -1003,13 +1428,18 @@ window.renderGalleryWithAnimation =
                 dy
             );
 
-            lastSparkX = currentX;
-            lastSparkY = currentY;
+
+            lastSparkX =
+                currentX;
+
+            lastSparkY =
+                currentY;
 
         }
 
 
-        mouseMoving = false;
+        mouseMoving =
+            false;
 
 
         requestAnimationFrame(
@@ -1022,10 +1452,6 @@ window.renderGalleryWithAnimation =
     animateCursor();
 
 
-    /* =========================================
-       CREATE SPARKLE
-    ========================================= */
-
     function createSpark(
         x,
         y,
@@ -1034,7 +1460,9 @@ window.renderGalleryWithAnimation =
     ) {
 
         const spark =
-            document.createElement("span");
+            document.createElement(
+                "span"
+            );
 
 
         spark.className =
@@ -1042,25 +1470,32 @@ window.renderGalleryWithAnimation =
 
 
         const size =
-            2 + Math.random() * 4;
+            2 +
+            Math.random() * 4;
 
 
         const life =
-            450 + Math.random() * 350;
+            450 +
+            Math.random() * 350;
 
 
         const spread =
-            8 + Math.random() * 18;
+            8 +
+            Math.random() * 18;
 
 
         const randomX =
-            (Math.random() - 0.5) *
-            spread;
+            (
+                Math.random() -
+                0.5
+            ) * spread;
 
 
         const randomY =
-            (Math.random() - 0.5) *
-            spread;
+            (
+                Math.random() -
+                0.5
+            ) * spread;
 
 
         const driftX =
@@ -1126,9 +1561,9 @@ window.renderGalleryWithAnimation =
     }
 
 
-    /* =========================================
-       HOVER ELEMENTS
-    ========================================= */
+    /* =====================================================
+       HOVER EFFECT
+    ===================================================== */
 
     const hoverElements =
         document.querySelectorAll(
@@ -1166,13 +1601,13 @@ window.renderGalleryWithAnimation =
     );
 
 
-    /* =========================================
+    /* =====================================================
        CLICK BURST
-    ========================================= */
+    ===================================================== */
 
     document.addEventListener(
         "click",
-        (event) => {
+        event => {
 
             createClickBurst(
                 event.clientX,
@@ -1188,7 +1623,8 @@ window.renderGalleryWithAnimation =
         y
     ) {
 
-        const particleCount = 12;
+        const particleCount =
+            12;
 
 
         for (
@@ -1198,7 +1634,9 @@ window.renderGalleryWithAnimation =
         ) {
 
             const burst =
-                document.createElement("span");
+                document.createElement(
+                    "span"
+                );
 
 
             burst.className =
@@ -1266,140 +1704,185 @@ window.renderGalleryWithAnimation =
     }
 
 })();
+
+
 /* =========================================================
-   ASOMI ENTERPRISE
-   PREMIUM OPENING ANIMATION
+   23. PREMIUM OPENING ANIMATION
 ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    const intro =
-        document.getElementById("asomi-intro");
-
-    const particleContainer =
-        document.getElementById("asomiParticles");
-
-
-    /* =========================================
-       CREATE GOLD PARTICLES
-    ========================================= */
-
-    if (particleContainer) {
-
-        const particleCount =
-            window.innerWidth <= 768 ? 35 : 80;
-
-        for (
-            let i = 0;
-            i < particleCount;
-            i++
-        ) {
-
-            const particle =
-                document.createElement("span");
-
-            particle.className =
-                "asomi-particle";
-
-
-            /* RANDOM POSITION */
-
-            particle.style.left =
-                `${Math.random() * 100}%`;
-
-            particle.style.top =
-                `${Math.random() * 100}%`;
-
-
-            /* RANDOM SIZE */
-
-            const size =
-                Math.random() * 3 + 1;
-
-            particle.style.width =
-                `${size}px`;
-
-            particle.style.height =
-                `${size}px`;
-
-
-            /* RANDOM MOVEMENT */
-
-            particle.style.setProperty(
-                "--particle-x",
-                `${(Math.random() - .5) * 350}px`
+        const intro =
+            document.getElementById(
+                "asomi-intro"
             );
 
 
-            /* RANDOM SPEED */
-
-            particle.style.setProperty(
-                "--particle-time",
-                `${4 + Math.random() * 6}s`
+        const particleContainer =
+            document.getElementById(
+                "asomiParticles"
             );
 
 
-            /* RANDOM DELAY */
+        /* =================================================
+           CREATE GOLD PARTICLES
+        ================================================= */
 
-            particle.style.animationDelay =
-                `${Math.random() * 5}s`;
+        if (particleContainer) {
+
+            const particleCount =
+                window.innerWidth <= 768
+                    ? 35
+                    : 80;
 
 
-            particleContainer.appendChild(
-                particle
-            );
+            for (
+                let i = 0;
+                i < particleCount;
+                i++
+            ) {
+
+                const particle =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                particle.className =
+                    "asomi-particle";
+
+
+                particle.style.left =
+                    `${Math.random() * 100}%`;
+
+
+                particle.style.top =
+                    `${Math.random() * 100}%`;
+
+
+                const size =
+                    Math.random() * 3 +
+                    1;
+
+
+                particle.style.width =
+                    `${size}px`;
+
+
+                particle.style.height =
+                    `${size}px`;
+
+
+                particle.style.setProperty(
+                    "--particle-x",
+                    `${(
+                        Math.random() -
+                        0.5
+                    ) * 350}px`
+                );
+
+
+                particle.style.setProperty(
+                    "--particle-time",
+                    `${4 + Math.random() * 6}s`
+                );
+
+
+                particle.style.animationDelay =
+                    `${Math.random() * 5}s`;
+
+
+                particleContainer.appendChild(
+                    particle
+                );
+
+            }
 
         }
 
-    }
 
-
-    /* =========================================
-       LOCK PAGE WHILE INTRO PLAYS
-    ========================================= */
-
-    document.body.style.overflow =
-        "hidden";
-
-
-    /* =========================================
-       FINISH INTRO
-    ========================================= */
-
-    setTimeout(() => {
-
-        if (!intro) return;
-
-        intro.classList.add(
-            "asomi-intro-hide"
-        );
+        /* =================================================
+           PAGE LOCK
+        ================================================= */
 
         document.body.style.overflow =
-            "";
-
-    }, 7000);
+            "hidden";
 
 
-    /* =========================================
-       OPTIONAL CLICK TO SKIP
-    ========================================= */
+        /* =================================================
+           FINISH INTRO
+        ================================================= */
 
-    if (intro) {
-
-        intro.addEventListener(
-            "click",
+        setTimeout(
             () => {
+
+                if (!intro) {
+
+                    document.body.style.overflow =
+                        "";
+
+                    return;
+
+                }
+
 
                 intro.classList.add(
                     "asomi-intro-hide"
                 );
 
+
                 document.body.style.overflow =
                     "";
 
-            }
+            },
+            7000
         );
 
-    }
 
-});
+        /* =================================================
+           CLICK TO SKIP
+        ================================================= */
+
+        if (intro) {
+
+            intro.addEventListener(
+                "click",
+                () => {
+
+                    intro.classList.add(
+                        "asomi-intro-hide"
+                    );
+
+
+                    document.body.style.overflow =
+                        "";
+
+                }
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   24. FINAL CONSOLE MESSAGE
+========================================================= */
+
+console.log(
+    "%cASOMI ENTERPRISE",
+    "font-size:24px;font-weight:bold;"
+);
+
+
+console.log(
+    "Premium Printing Services • Guwahati"
+);
+
+
+console.log(
+    "Hero 3D interaction enabled."
+);
